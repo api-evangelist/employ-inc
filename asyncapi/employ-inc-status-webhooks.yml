@@ -1,0 +1,88 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://status.employinc.com/ (subscription forms read from the served HTML) and its feed
+  endpoints, probed 2026-09-13
+name: Employ Inc status notification surface
+description: >-
+  The only push/event surface Employ, Inc. operates. It belongs to the Atlassian Statuspage platform
+  hosting status.employinc.com, and it is the one way a consumer can be told about an Employ platform
+  change instead of polling for it.
+asyncapi_spec_published: false
+webhooks_advertised: true
+subject: status.employinc.com (Employ platform status)
+channels:
+- name: webhook
+  transport: HTTP POST to a subscriber-supplied URL
+  subscribe_form: present on https://status.employinc.com/ (form id subscribe-form-webhook, fields endpoint + email)
+  note: >-
+    A generic webhook subscription is offered on the page. The subscriber registers a callback URL
+    and a contact email; Statuspage then POSTs on incident and component-status changes.
+- name: microsoft-teams
+  transport: HTTP POST to a Teams channel incoming-webhook URL
+  endpoint: POST https://status.employinc.com/subscriptions/teams.json
+  note: >-
+    Confirmed in the page HTML — "Get incident updates and maintenance status messages in Microsoft
+    Teams channel", with a Channel's Webhook URL field.
+- name: email
+  transport: email
+  endpoint: POST https://status.employinc.com/subscriptions/new-email
+- name: sms
+  transport: SMS
+  endpoint: POST https://status.employinc.com/subscriptions/new-sms
+- name: rss
+  transport: pull feed
+  endpoint: https://status.employinc.com/history.rss
+  http_status: 200
+  content_type: application/rss+xml
+- name: atom
+  transport: pull feed
+  endpoint: https://status.employinc.com/history.atom
+  http_status: 200
+  content_type: application/atom+xml
+- name: json-history
+  transport: pull feed
+  endpoint: https://status.employinc.com/history.json
+  http_status: 200
+  content_type: application/json
+events:
+- id: incident.created
+  description: A new incident is opened against one or more components.
+  observed: true
+  evidence: >-
+    examples/employ-inc-status-incidents.json — 5 incidents on record, each with a dated
+    incident_updates[] timeline beginning at status "investigating".
+- id: incident.updated
+  description: A dated update is posted on an open incident, optionally moving component statuses.
+  observed: true
+  evidence: >-
+    incident_updates[].affected_components[] carries old_status -> new_status transitions, e.g.
+    degraded_performance -> operational on component 3sk7k3k1wlt3 (AI Interview Companion) on
+    2026-06-22.
+- id: incident.resolved
+  description: An incident is closed and resolved_at is set.
+  observed: true
+- id: component.status_changed
+  description: A monitored component moves between operational, degraded_performance, partial_outage, major_outage and under_maintenance.
+  observed: true
+- id: scheduled_maintenance.*
+  description: A maintenance window is scheduled, started or completed.
+  observed: false
+  note: No maintenance window has ever been recorded on this page — all three maintenance endpoints returned empty arrays.
+payload_schema:
+  published_by_employ: false
+  note: >-
+    The delivered payload shape is defined by the Atlassian Statuspage platform, not by Employ, and
+    Employ publishes no schema for it. No payload schema is authored here. What IS first-party and
+    verifiable is the polled representation of the same events, which is fully modelled in
+    openapi/employ-inc-status-api-openapi.yml — an agent that cannot subscribe can reconstruct every
+    event above from /api/v2/incidents.json.
+gaps:
+- No AsyncAPI document. Nothing machine-readable describes the push surface.
+- >-
+  No event surface of any kind on www.employinc.com. The WordPress origin registers no webhook
+  routes and publishes no outbound events; content changes are discoverable only by polling
+  /wp-json or reading the sitemap lastmod dates.
+- >-
+  The push surface inherits the coverage gap of the page it sits on — subscribing tells you about
+  AI Interview Companion and nothing else, because that is the only component monitored.

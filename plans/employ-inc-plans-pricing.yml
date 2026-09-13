@@ -1,0 +1,27 @@
+generated: '2026-09-13'
+method: searched
+source: https://www.employinc.com/ (site-wide search for a pricing or plans page, 2026-09-13)
+name: Employ Inc plans and pricing
+description: >-
+  What Employ, Inc. publishes about what its products cost, and what any of it means for API access.
+plan_count: 0
+plans: []
+currency: null
+note: >-
+  Employ, Inc. publishes no plans and no prices. https://www.employinc.com/pricing/ returns HTTP 404;
+  there is no pricing entry in the site navigation, and every commercial path on the site terminates
+  in a sales form — "Request Demo" at /demo/, the contact form at /contact/, and the partner referral
+  form at /partners/. This is a pure enterprise contact-us motion at the holding-company level.
+api_access_note: >-
+  None of the four machine-readable surfaces recorded in this profile is a commercial product. The
+  status API and the anonymous read routes of the content and events APIs are free and require no
+  account; the write routes require a WordPress application password on Employ's own CMS, which is
+  internal staff access and is not sold. Customer-facing recruiting API access is licensed per ATS
+  brand — JazzHR, Lever and Jobvite — and is priced under those brands' own agreements, not here.
+evidence:
+- url: https://www.employinc.com/pricing/
+  status: 404
+- url: https://www.employinc.com/demo/
+  status: 200
+- url: https://www.employinc.com/contact/
+  status: 200

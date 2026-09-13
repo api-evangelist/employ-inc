@@ -1,0 +1,23 @@
+generated: '2026-09-13'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.employinc.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 30 12:26:19 2026 GMT
+  hsts: true
+  hsts_max_age: 31622400
+- host: status.employinc.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 17 13:23:06 2026 GMT
+  hsts: true
+  hsts_max_age: 259200
+domains:
+- domain: employinc.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

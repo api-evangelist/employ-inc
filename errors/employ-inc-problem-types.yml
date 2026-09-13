@@ -1,0 +1,96 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/employ-inc-content-api-openapi.yml (derived from https://www.employinc.com/wp-json/),
+  openapi/employ-inc-events-calendar-rest-api-openapi.json, and live 401/403/400 responses probed
+  on 2026-09-13
+name: Employ Inc error catalog
+description: >-
+  The error envelope and code families an agent will meet on Employ, Inc.'s machine-readable
+  surfaces. Employ publishes no error reference of its own; every entry below is either read from
+  the contracts its hosts serve or observed on a live probe.
+format: wordpress-rest
+rfc9457: false
+content_type: application/json
+envelope:
+  code:
+    type: string
+    description: Machine-readable error slug. This is the field to branch on.
+  message:
+    type: string
+    description: Human-readable message, localized to the site language.
+  data:
+    type: object
+    description: Error detail.
+    properties:
+      status: HTTP status code, repeated inside the body.
+      params: Present on validation failures — maps the offending parameter name to its message.
+      details: Present on validation failures — per-parameter detail objects.
+observed:
+- code: rest_forbidden_context
+  status: 403
+  surface: GET /wp-json/wp/v2/comments
+  message_observed: Sorry, you are not allowed to edit comments.
+  meaning: The collection is closed to anonymous readers on this installation.
+  remediation: Authenticate with a WordPress application password that holds the required capability.
+  evidence: Probed 2026-09-13, HTTP 403.
+- code: rest_not_logged_in
+  status: 401
+  surface: GET /wp-json/wp/v2/users
+  meaning: The user directory requires authentication on this installation.
+  remediation: Authenticate, or use /wp/v2/posts _embed to read author display names instead.
+  evidence: Probed 2026-09-13, HTTP 401.
+- code: rest_forbidden
+  status: 401
+  surface: GET /wp-json/wp-abilities/v1/abilities
+  meaning: >-
+    The WordPress Abilities API — the agent-facing capability registry — is registered on this site
+    but closed to anonymous callers.
+  remediation: Requires an authenticated session; no public capability listing is available.
+  evidence: Probed 2026-09-13, HTTP 401.
+- code: rest_invalid_param
+  status: 400
+  surface: GET /wp-json/tec/v1/events
+  meaning: A query parameter failed schema validation; data.params names the offending parameter.
+  remediation: Read data.params and correct the named parameter.
+  evidence: Probed 2026-09-13, HTTP 400 with no parameters supplied.
+derived_from_contract:
+- code: rest_post_invalid_id
+  status: 404
+  meaning: No record exists for the requested id in the addressed post type.
+  remediation: List the collection first; ids are not stable across environments.
+- code: rest_invalid_param
+  status: 400
+  meaning: >-
+    A parameter failed the schema declared for the route. Every route in the discovery document
+    carries per-argument type, enum, default, minimum and maximum, so this is fully predictable
+    client-side.
+  remediation: Validate against the route args before sending.
+- code: rest_missing_callback_param
+  status: 400
+  meaning: A required parameter was omitted.
+  remediation: Supply every argument the route marks required.
+- code: rest_cannot_create
+  status: 403
+  meaning: The authenticated user lacks the capability to create in this post type.
+- code: rest_cannot_edit
+  status: 403
+  meaning: The authenticated user lacks the capability to edit this record.
+- code: rest_cannot_delete
+  status: 403
+  meaning: The authenticated user lacks the capability to delete this record.
+- code: rest_no_route
+  status: 404
+  meaning: The path is not registered in any namespace on this site.
+  remediation: Re-read https://www.employinc.com/wp-json/ — the registered namespaces are enumerable.
+status_api:
+  surface: https://status.employinc.com/api/v2
+  envelope: none
+  note: >-
+    The Atlassian Statuspage API returns no structured error body. Every one of the eight endpoints
+    returned HTTP 200 on probe; an unknown path returns a bare 404. There is nothing to catalog
+    beyond the status code.
+gaps:
+- >-
+  Employ publishes no error reference page, so no error titles, causes or remediation text are
+  authored by the provider. Everything above is read from the contract or observed on the wire.

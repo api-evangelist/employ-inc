@@ -1,0 +1,62 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  registry.npmjs.org search API, pypi.org/pypi/*/json, rubygems.org/api/v1/gems/*.json,
+  packagist.org/search.json, and the Employ GitHub organization at https://github.com/Employ-Inc —
+  all queried 2026-09-13
+name: Employ Inc packages and SDKs
+description: >-
+  First-party client libraries published by Employ, Inc. There are none, and the searches that
+  establish that are recorded so the absence is auditable rather than assumed.
+package_count: 0
+official_package_count: 0
+packages: []
+searches:
+- registry: npm
+  query: employinc
+  results: 0
+  version: null
+  published: null
+  note: >-
+    Zero matches. A scope:employ search also returned zero. No @employ, @employinc or @jazzhr scope
+    is registered.
+- registry: npm
+  query: 'scope:employ'
+  results: 0
+  version: null
+  published: null
+- registry: pypi
+  query: employ / employinc / employ-inc
+  results: 0
+  version: null
+  published: null
+  note: All three metadata endpoints returned HTTP 404.
+- registry: rubygems
+  query: employ
+  results: 1
+  version: 0.0.2
+  published: null
+  official: false
+  note: >-
+    NOT Employ, Inc. The gem "employ" v0.0.2 is authored by Victor Rodrigues, described as "Github
+    development workflow", homepage github.com/rodrigues/employ. A name collision, recorded so a
+    later run does not mistake it for a first-party SDK.
+- registry: packagist
+  query: employinc
+  results: 0
+  version: null
+  published: null
+- registry: github
+  query: https://github.com/Employ-Inc
+  results: 0
+  version: null
+  published: null
+  note: >-
+    The organization exists (created 2024-09-24, 17 followers) but publishes ZERO public
+    repositories. Confirmed via https://api.github.com/orgs/Employ-Inc — "public_repos": 0 — and
+    https://api.github.com/orgs/Employ-Inc/repos, which returned an empty array.
+note: >-
+  Employ, Inc. ships no SDK because it runs no developer program. The client libraries a customer
+  would actually use belong to the ATS brands underneath it and are profiled in their own
+  repositories. No SDKs pointer is emitted for this record; a pointer here would credit the holding
+  company with libraries it does not publish.

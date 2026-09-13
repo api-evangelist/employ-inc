@@ -1,0 +1,15 @@
+generated: '2026-09-13'
+method: derived
+source: openapi/employ-inc-content-api-openapi.yml, openapi/employ-inc-tec-events-rest-api-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: 'WordPress application password (HTTP Basic). Authorization endpoint: https://www.employinc.com/wp-admin/authorize-application.php.
+    Declared by the site''s own discovery document under authentication.application-passwords.'
+  sources:
+  - openapi/employ-inc-content-api-openapi.yml
+  - openapi/employ-inc-tec-events-rest-api-openapi.json

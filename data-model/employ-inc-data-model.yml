@@ -1,0 +1,213 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/employ-inc-content-api-openapi.yml, openapi/employ-inc-events-calendar-rest-api-openapi.json,
+  openapi/employ-inc-status-api-openapi.yml, plus the taxonomy and type registries probed at
+  /wp-json/wp/v2/types and /wp-json/wp/v2/taxonomies on 2026-09-13
+name: Employ Inc data model
+description: >-
+  The entity graph behind Employ, Inc.'s machine-readable surfaces. Three disconnected islands: the
+  WordPress content graph, the Events Calendar graph that overlaps it, and the status graph on a
+  separate host with no relationship to either.
+domains:
+- name: Content
+  base: https://www.employinc.com/wp-json/wp/v2
+  entities:
+  - name: Post
+    path: /posts
+    description: Employ blog posts. 32 records at probe time.
+    id_field: id
+    id_type: integer
+  - name: Page
+    path: /pages
+    description: Marketing, product and legal pages.
+    id_field: id
+  - name: Media
+    path: /media
+    description: Images and files in the media library.
+    id_field: id
+  - name: Resource
+    path: /resource
+    description: Gated reports, guides, toolkits and whitepapers.
+    id_field: id
+  - name: CaseStudy
+    path: /case-study
+    description: Customer case studies.
+    id_field: id
+  - name: NewsItem
+    path: /news_item
+    description: Press releases and news items.
+    id_field: id
+  - name: GlossaryTerm
+    path: /glossary_terms
+    description: Recruiting and talent-acquisition glossary entries.
+    id_field: id
+  - name: Team
+    path: /teams
+    description: Leadership and team member profiles.
+    id_field: id
+  - name: LandingPage
+    path: /lp
+    description: Campaign landing pages.
+    id_field: id
+  - name: Category
+    path: /categories
+    description: Blog categories.
+    id_field: id
+  - name: Tag
+    path: /tags
+    description: Blog tags.
+    id_field: id
+  - name: Topic
+    path: /topic
+    description: The topic taxonomy applied across resources and posts.
+    id_field: id
+  - name: ResourceType
+    path: /resource_type
+    id_field: id
+  - name: NewsItemType
+    path: /news_item_type
+    id_field: id
+  - name: PageType
+    path: /page-type
+    id_field: id
+  - name: User
+    path: /users
+    description: Authors. Closed to anonymous callers (HTTP 401 at probe).
+    id_field: id
+    access: authenticated
+- name: Events
+  base: https://www.employinc.com/wp-json/tribe/events/v1
+  entities:
+  - name: Event
+    path: /events
+    id_field: id
+    alternate_key: slug
+    description: Employ events and webinars.
+  - name: Venue
+    path: /venues
+    id_field: id
+    alternate_key: slug
+  - name: Organizer
+    path: /organizers
+    id_field: id
+    alternate_key: slug
+  - name: EventCategory
+    path: /categories
+    id_field: id
+  - name: EventTag
+    path: /tags
+    id_field: id
+- name: Status
+  base: https://status.employinc.com/api/v2
+  entities:
+  - name: Page
+    id_field: id
+    description: The status page itself. Constant value 5t2j43rsvdfx.
+  - name: Component
+    id_field: id
+    description: A monitored platform component. One exists — AI Interview Companion.
+  - name: Incident
+    id_field: id
+  - name: IncidentUpdate
+    id_field: id
+  - name: AffectedComponent
+    id_field: code
+  - name: ScheduledMaintenance
+    id_field: id
+relationships:
+- from: Post
+  to: Category
+  type: has_many
+  via: categories[] (array of category ids)
+- from: Post
+  to: Tag
+  type: has_many
+  via: tags[] (array of tag ids)
+- from: Post
+  to: User
+  type: belongs_to
+  via: author (user id)
+- from: Post
+  to: Media
+  type: has_one
+  via: featured_media (media id)
+- from: Page
+  to: Page
+  type: belongs_to
+  via: parent (page id) — pages are hierarchical
+- from: Page
+  to: PageType
+  type: has_many
+  via: page-type[] (term ids)
+- from: Resource
+  to: Topic
+  type: has_many
+  via: topic[] (term ids)
+- from: Resource
+  to: ResourceType
+  type: has_many
+  via: resource_type[] (term ids)
+- from: NewsItem
+  to: NewsItemType
+  type: has_many
+  via: news_item_type[] (term ids)
+- from: Category
+  to: Category
+  type: belongs_to
+  via: parent (category id)
+- from: Media
+  to: Post
+  type: belongs_to
+  via: post (attachment parent id)
+- from: Event
+  to: Venue
+  type: has_one
+  via: venue (venue object or id)
+- from: Event
+  to: Organizer
+  type: has_many
+  via: organizer[] (organizer objects or ids)
+- from: Event
+  to: EventCategory
+  type: has_many
+  via: categories[]
+- from: Event
+  to: EventTag
+  type: has_many
+  via: tags[]
+- from: Incident
+  to: IncidentUpdate
+  type: has_many
+  via: incident_updates[] (inlined objects)
+- from: IncidentUpdate
+  to: AffectedComponent
+  type: has_many
+  via: affected_components[] (inlined, keyed on component code)
+- from: AffectedComponent
+  to: Component
+  type: belongs_to
+  via: code (component id)
+- from: Incident
+  to: Page
+  type: belongs_to
+  via: page_id
+id_conventions:
+  wordpress: Sequential integers, scoped per site. Not stable across environments.
+  events: >-
+    Integer ids plus a human-readable slug; every Events Calendar collection is addressable by
+    /by-slug/{slug} as well as /{id}, which makes slugs the safer client-side key.
+  statuspage: Opaque 12-character lowercase alphanumeric strings, e.g. 5t2j43rsvdfx, 3sk7k3k1wlt3.
+notes:
+- >-
+  The Events Calendar entities exist TWICE. tribe_events, tribe_venue and tribe_organizer are also
+  registered as ordinary WordPress post types under /wp/v2, so the same underlying record is
+  reachable through two contracts with two different serializations. The /wp/v2 view exposes the
+  WordPress post envelope; the tribe/events/v1 view exposes the event-domain envelope with venue and
+  organizer inlined. Neither contract mentions the other.
+- >-
+  And a third time: the tec/v1 namespace serves the same events, organizers and venues again under a
+  newer contract. Three projections of one dataset, no crosswalk published.
+- >-
+  The status graph shares no identifier with anything on www.employinc.com. There is no join between
+  a monitored component and any product, brand or content record.

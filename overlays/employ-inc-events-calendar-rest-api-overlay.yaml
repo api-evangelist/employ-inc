@@ -1,0 +1,61 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Employ Inc Events Calendar REST API
+  version: 1.0.0
+x-generated: '2026-09-13'
+x-method: generated
+x-source: openapi/employ-inc-events-calendar-rest-api-openapi.json
+x-extends: openapi/employ-inc-events-calendar-rest-api-openapi.json
+x-note: >-
+  The underlying document is saved VERBATIM as Employ's host serves it at
+  /wp-json/tribe/events/v1/doc. It is never mutated. This overlay records the enhancements and
+  findings API Evangelist adds on top, so the original stays auditable against the live URL.
+actions:
+- target: $.info
+  description: Attribute the contract correctly and record why it is credited to Employ.
+  update:
+    x-served-by: https://www.employinc.com/wp-json/tribe/events/v1/doc
+    x-http-status: 200
+    x-fetched: '2026-09-13'
+    x-ownership-note: >-
+      info.contact in the original names support@theeventscalendar.com — the StellarWP plugin vendor
+      that generates this document, not Employ. The contract is nonetheless credited to Employ, Inc.
+      because servers[] names https://www.employinc.com/wp-json/tribe/events/v1/, the endpoint runs
+      on Employ's own origin, and every record it returns is Employ's own event data. This is the
+      self-hosted-server case: the vendor wrote the schema, Employ operates the API.
+- target: $.info
+  description: Record the contract-quality gaps found in the original.
+  update:
+    x-ae-contract-gaps:
+    - No operationId on any of the 26 operations. Clients must bind by method and path.
+    - No securitySchemes block, although POST and DELETE on every path require an authenticated WordPress user.
+    - No 401, 403 or 429 responses declared on any operation.
+    - No examples in any response schema.
+- target: $.info
+  description: Record the duplicate-surface finding.
+  update:
+    x-ae-overlapping-surfaces:
+    - url: https://www.employinc.com/wp-json/tec/v1
+      contract: openapi/employ-inc-tec-events-rest-api-openapi.json
+      relationship: >-
+        Newer tec/v1 generation of the same product, serving the same events, venues and organizers
+        from the same origin. Neither contract references the other and neither is marked deprecated.
+    - url: https://www.employinc.com/wp-json/wp/v2/tribe_events
+      contract: openapi/employ-inc-content-api-openapi.yml
+      relationship: >-
+        The same records again, as ordinary WordPress post types with the post envelope instead of
+        the event envelope.
+- target: $.servers[0]
+  description: Name the host explicitly.
+  update:
+    description: Production — Employ, Inc. corporate site, The Events Calendar tribe/events/v1 namespace.
+- target: $
+  description: Cross-link the derived artifacts that carry the runtime semantics this contract omits.
+  update:
+    x-ae-artifacts:
+      conventions: conventions/employ-inc-conventions.yml
+      errors: errors/employ-inc-problem-types.yml
+      authentication: authentication/employ-inc-authentication.yml
+      rate_limits: rate-limits/employ-inc-rate-limits.yml
+      data_model: data-model/employ-inc-data-model.yml
+      skills: skills/employ-inc-list-events.md

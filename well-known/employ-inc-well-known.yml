@@ -1,0 +1,129 @@
+generated: '2026-09-13'
+method: probed
+source: direct HTTP probe of the named /.well-known/ paths on every host this record knows
+name: Employ Inc well-known discovery probe
+description: >-
+  Named-path probe of the RFC 8615 /.well-known/ namespace across every host in the Employ, Inc.
+  record: the registrable domain and www, the corporate docs/marketing host, the Cloudflare-fronted
+  careers host, the Pantheon marketing-page host, and the status host that serves the only
+  machine-readable API surface Employ publishes off the corporate domain. NO PATH ON ANY HOST
+  EMPLOY CONTROLS RETURNED A REAL DOCUMENT. This file records that absence; it is deliberately NOT
+  wired to a WellKnown or SecurityTxt pointer in apis.yml, because those pointers assert that the
+  provider serves the surface.
+notes:
+  - >-
+    www.employinc.com and employinc.com are the same WordPress origin. Every /.well-known/ path
+    returns HTTP 404 with the site's full HTML 404 template (~164KB), so the status code and the
+    body agree: nothing is served.
+  - >-
+    pages.employinc.com answers HTTP 200 with the identical 295,796-byte marketing HTML page for
+    EVERY path probed, including /openapi.json and /.well-known/agent-card.json. This is a catch-all
+    SPA/landing-page shell, not a document. Scored as a miss on every path.
+  - >-
+    careers.employinc.com sits behind a Cloudflare interstitial ("Just a moment...") and returns
+    HTTP 403 to a non-browser client on every path. This is an edge bot policy, not a statement
+    about what the host serves; nothing is claimed either way.
+  - >-
+    status.employinc.com DOES return HTTP 200 for /.well-known/security.txt, but the document is
+    NOT Employ's. It is Atlassian's, served by the Statuspage platform that hosts the page: the
+    contacts are security@atlassian.com and atlassian.com/trust, and the file carries
+    "Canonical: https://www.atlassian.com/.well-known/security.txt". It is recorded here for
+    completeness and explicitly NOT credited to Employ, Inc. No SecurityTxt pointer is emitted.
+hosts:
+  - host: www.employinc.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: employinc.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: status.employinc.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        note: >-
+          Served by the Atlassian Statuspage platform, not by Employ. Canonical header points at
+          www.atlassian.com. Not saved as an Employ artifact and not credited to Employ.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: careers.employinc.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+        note: Cloudflare bot interstitial, not a served-or-absent signal.
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+  - host: pages.employinc.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        note: SPA catch-all returning the marketing HTML page. Not a document — scored as a miss.
+      - path: /.well-known/openid-configuration
+        status: 200
+        note: SPA catch-all HTML. Not a document.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        note: SPA catch-all HTML. Not a document.
+      - path: /.well-known/api-catalog
+        status: 200
+        note: SPA catch-all HTML. Not a document.
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        note: SPA catch-all HTML. Not a document.
+      - path: /.well-known/agent-card.json
+        status: 200
+        note: SPA catch-all HTML. Not a document.
+      - path: /.well-known/agent.json
+        status: 200
+        note: SPA catch-all HTML. Not a document.
+summary:
+  hosts_probed: 5
+  paths_probed: 35
+  real_documents_served_by_employ: 0
+  agent_card_found: false
+  security_txt_found_belonging_to_employ: false

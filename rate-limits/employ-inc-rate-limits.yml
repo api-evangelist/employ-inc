@@ -1,0 +1,40 @@
+generated: '2026-09-13'
+method: probed
+source: >-
+  live response headers from https://www.employinc.com/wp-json/wp/v2/posts?per_page=1 and
+  https://status.employinc.com/api/v2/summary.json, probed 2026-09-13; plus a search of
+  employinc.com for any published limit
+name: Employ Inc rate limits
+description: >-
+  What Employ, Inc. publishes about rate limiting on its machine-readable surfaces, and what its
+  origins actually return at the wire.
+limit_count: 0
+limits: []
+response_headers: []
+status_on_exhaustion: unknown
+retry_after: false
+note: >-
+  Employ publishes no rate limits. There is no developer portal, no API terms page and no limits
+  section anywhere on employinc.com, and no probed response carried a RateLimit-*, X-RateLimit-* or
+  Retry-After header. An honest zero: nothing is documented and nothing is signalled, so an agent
+  has no runtime backpressure signal to read and must treat throttling as unobservable.
+observed:
+- surface: https://www.employinc.com/wp-json/wp/v2
+  headers_returned:
+  - 'cache-control: public, max-age=604800'
+  - 'x-served-by: Fastly (cache-chi / cache-ewr nodes)'
+  - 'x-cache: HIT, HIT, MISS, MISS'
+  - 'x-wp-total: 32'
+  - 'x-wp-totalpages: 32'
+  rate_limit_headers: none
+  note: >-
+    The effective protection is the Fastly CDN in front of the origin, not a declared quota. Read
+    routes carry a seven-day public cache lifetime, so repeated identical polls are absorbed at the
+    edge and never reach WordPress. This is a deployment property, not a contract, and Employ makes
+    no commitment about it.
+- surface: https://status.employinc.com/api/v2
+  headers_returned: []
+  rate_limit_headers: none
+  note: >-
+    Atlassian Statuspage applies platform-side throttling to its public API but Employ's page does
+    not document it and no limit header was returned on any of the eight endpoints probed.

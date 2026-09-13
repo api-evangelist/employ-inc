@@ -1,0 +1,154 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/employ-inc-content-api-openapi.yml, openapi/employ-inc-events-calendar-rest-api-openapi.json,
+  openapi/employ-inc-status-api-openapi.yml, and live response headers probed from
+  https://www.employinc.com/wp-json/wp/v2/posts?per_page=1 on 2026-09-13
+name: Employ Inc API conventions
+description: >-
+  Cross-cutting runtime semantics for the four machine-readable surfaces Employ, Inc. operates on its
+  own hosts. These are platform conventions (WordPress REST, The Events Calendar, Atlassian
+  Statuspage) rather than a house API style Employ authored, because Employ publishes no developer
+  program of its own; they are recorded here because they are what an agent actually meets at the wire.
+authentication:
+  style: >-
+    Anonymous for every read of published content and for the entire status API. Writes on the
+    WordPress and Events Calendar surfaces use a WordPress application password over HTTP Basic.
+  scheme: http/basic (application password)
+  authorization_endpoint: https://www.employinc.com/wp-admin/authorize-application.php
+  cors_allowed_headers:
+  - Authorization
+  - X-WP-Nonce
+  - Content-Disposition
+  - Content-MD5
+  - Content-Type
+  - X-HTTP-Method-Override
+  note: >-
+    /wp/v2/users returns 401 and /wp/v2/comments returns 403 anonymously — both collections are
+    closed to the public on this installation. Probed 2026-09-13.
+  cross_link: authentication/employ-inc-authentication.yml
+idempotency:
+  coverage: none
+  scope: []
+  mechanism: none
+  note: >-
+    No Idempotency-Key header, no client-supplied request identifier, and no replay window is
+    defined on any of the four surfaces. Neither the WordPress REST discovery document nor either
+    Events Calendar contract declares one, and no such header appears in the CORS
+    access-control-allow-headers list the origin returns. An agent that retries a POST to
+    /wp-json/tribe/events/v1/events after a timeout will create a second event. Recorded as none
+    rather than omitted, because the band gate reads this field and prose is invisible to it.
+pagination:
+  style: page-number
+  params:
+  - name: page
+    description: 1-indexed page number.
+  - name: per_page
+    description: Records per page, default 10, maximum 100.
+  - name: offset
+    description: Skip a number of records, as an alternative to page.
+  response_headers:
+  - name: X-WP-Total
+    description: Total matching records. Observed value 32 on /wp/v2/posts.
+  - name: X-WP-TotalPages
+    description: Total pages at the current per_page.
+  - name: Link
+    description: RFC 8288 link header carrying rel="next" and rel="prev".
+  evidence: >-
+    Probed 2026-09-13 on https://www.employinc.com/wp-json/wp/v2/posts?per_page=1 — returned
+    x-wp-total: 32, x-wp-totalpages: 32 and link: <...&page=2>; rel="next".
+  status_api: >-
+    The Statuspage API is unpaginated. Every endpoint returns the complete current collection in one
+    document.
+field_selection:
+  supported: true
+  params:
+  - name: _fields
+    description: Comma-separated allow-list of top-level response fields.
+  - name: context
+    description: view | embed | edit — controls how much of each record is returned.
+  - name: _embed
+    description: Inlines linked resources (author, featured media, terms) under _embedded.
+  note: Standard WordPress REST sparse-fieldset and embedding controls, declared in the route schemas.
+metadata:
+  supported: partial
+  note: >-
+    WordPress exposes a meta object on post-type records, but only registered meta keys are readable
+    over REST. No custom registered meta is exposed anonymously on this installation.
+request_tracing:
+  request_id_header: none
+  note: >-
+    No request-id or correlation header is returned. The origin sits behind Fastly and returns
+    x-served-by, x-cache and x-cache-hits, which identify the CDN node rather than the request.
+versioning:
+  style: path
+  detail: >-
+    The version is a path segment of the namespace — /wp-json/wp/v2, /wp-json/tribe/events/v1,
+    /wp-json/tec/v1, /api/v2 on the status host. Namespaces are enumerable at /wp-json/ under
+    namespaces[], which is how the tec/v1 surface can be discovered to coexist with tribe/events/v1.
+  cross_link: lifecycle/employ-inc-lifecycle.yml
+error_envelope:
+  format: wordpress-rest
+  rfc9457: false
+  shape:
+    code: Machine-readable error code, e.g. rest_post_invalid_id.
+    message: Human-readable message.
+    data.status: HTTP status code, repeated inside the body.
+  note: >-
+    Not application/problem+json. Content-Type is application/json and the envelope is WordPress's
+    own WP_Error serialization. The Statuspage API returns a plain 404 with no structured body.
+  cross_link: errors/employ-inc-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: unknown
+  note: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was returned on any probed response, and no
+    limit is published anywhere on employinc.com. The practical throttle is the Fastly cache in
+    front of the origin (cache-control: public, max-age=604800 on read routes), not a declared quota.
+  cross_link: rate-limits/employ-inc-rate-limits.yml
+caching:
+  read_routes: 'public, max-age=604800'
+  cdn: Fastly
+  note: >-
+    Read routes are served with a seven-day public cache lifetime, so a poll loop will usually be
+    answered by the CDN rather than the origin.
+reversibility:
+  grade: documented
+  applies_to: write surface of the WordPress content API and both Events Calendar APIs
+  operations:
+  - write: DELETE /wp/v2/{post-type}/{id}
+    reversal: >-
+      Soft delete. The route declares a force parameter, type boolean, default false, described in
+      Employ's own discovery document as "Whether to bypass Trash and force deletion." With the
+      default the record moves to Trash and can be restored by setting status back to a published
+      state; with force=true the deletion is unrecoverable and there is no reversal.
+    reversal_operation: 'POST /wp/v2/{post-type}/{id} with status: draft|publish'
+    window: null
+    window_source: null
+  - write: DELETE /wp-json/tribe/events/v1/events/{id}
+    reversal: >-
+      Same trash semantics — the Events Calendar deletes through the WordPress post lifecycle, so a
+      deleted event is trashed rather than destroyed unless force is set.
+    reversal_operation: 'POST /wp-json/tribe/events/v1/events/{id}'
+    window: null
+    window_source: null
+  - write: POST /wp/v2/media
+    reversal: DELETE /wp/v2/media/{id}
+    window: null
+    window_source: null
+  status_api: na
+  note: >-
+    Graded documented, not verified: a reversal path exists and is declared in the contract, but
+    Employ publishes NO retention window for trashed records. WordPress core defaults to 30 days via
+    EMPTY_TRASH_DAYS, and that default is NOT asserted here because Employ does not state it and the
+    constant can be changed per installation. Asserting a window we did not read would be the one
+    error in this artifact that could cost someone their data.
+dry_run_mode:
+  supported: false
+  note: No preview, validate-only or simulate parameter is declared on any write operation.
+bulk_operations:
+  supported: true
+  endpoint: POST /wp-json/batch/v1
+  note: >-
+    The discovery document registers a /batch/v1 route that accepts multiple sub-requests in one
+    call. It is authenticated; no anonymous use is possible.

@@ -1,20 +1,184 @@
 aid: employ-inc
 name: Employ Inc
-description: 'Employ Inc is a company surfaced via the API Evangelist harvest backlog (source: absent-parent)
-  and added to the network as a stub for full-pipeline profiling.'
 url: https://raw.githubusercontent.com/api-evangelist/employ-inc/refs/heads/main/apis.yml
+description: 'Employ, Inc. is the Denver-based parent company of the JazzHR, Lever and Jobvite applicant
+  tracking systems, and of the AI Interview, Screening and Sourcing Companions layered across them. Employ
+  itself runs no developer program: the recruiting APIs its customers integrate against are published
+  under each brand''s own domain and are profiled separately in this network. What Employ publishes on
+  employinc.com is a corporate surface that is nonetheless machine-readable — the WordPress REST API behind
+  its site, two self-describing Events Calendar REST contracts, and an anonymous Atlassian Statuspage
+  API on status.employinc.com — plus the legal, security and responsible-AI documents (Security Exhibit,
+  DPAs, SLAs, NYC Local Law 144 bias audit) that govern every brand underneath it.'
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/employ-inc.png
 x-type: company
 x-source: harvest:absent-parent
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-13'
 modified: '2026-09-13'
 tags:
-- Company
-apis: []
+- Human Resources
+- Recruiting
+- Talent Acquisition
+- Applicant Tracking
+- ATS
+- Hiring
+- HR Tech
+- Content
+- Events
+- Status
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: employ-inc:employ-inc-content-api
+  name: Employ Inc Content API
+  description: 'The WordPress REST API Employ, Inc. serves at www.employinc.com/wp-json/wp/v2. It exposes
+    the Employ corporate site as JSON: blog posts, marketing and legal pages, media, the resource, case-study,
+    news_item, glossary_terms and teams custom post types, the topic, resource_type, news_item_type and
+    page-type taxonomies, and cross-content-type search. Reads on published content are anonymous; writes,
+    /wp/v2/users and /wp/v2/comments require an authenticated WordPress application password.'
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Content
+  - WordPress
+  - Blog
+  - Search
+  - Taxonomy
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-content-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: Overlay
+    url: overlays/employ-inc-content-api-overlay.yaml
+- aid: employ-inc:employ-inc-events-calendar-rest-api
+  name: Employ Inc Events Calendar REST API
+  description: The Events Calendar REST API (tribe/events/v1) for Employ, Inc. events and webinars, with
+    a self-describing OpenAPI 3.0.0 contract the host publishes at its own /doc endpoint. Covers events,
+    venues, organizers, event categories and event tags, each addressable by id or by slug. Read operations
+    are anonymous; create, update and delete require an authenticated WordPress user.
+  humanURL: https://www.employinc.com/events/
+  baseURL: https://www.employinc.com/wp-json/tribe/events/v1
+  tags:
+  - Events
+  - Webinars
+  - Venues
+  - Calendar
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-events-calendar-rest-api-openapi.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: Overlay
+    url: overlays/employ-inc-events-calendar-rest-api-overlay.yaml
+- aid: employ-inc:employ-inc-tec-events-rest-api
+  name: Employ Inc TEC Events REST API
+  description: The newer tec/v1 generation of The Events Calendar REST API on www.employinc.com, published
+    as a self-describing OpenAPI 3.0.4 contract at its own /docs endpoint. Covers events, organizers and
+    venues with full CRUD. It runs alongside the older tribe/events/v1 surface rather than replacing it,
+    so both are recorded.
+  humanURL: https://www.employinc.com/events/
+  baseURL: https://www.employinc.com/wp-json/tec/v1
+  tags:
+  - Events
+  - Venues
+  - Calendar
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-tec-events-rest-api-openapi.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-status-api
+  name: Employ Inc Status API
+  description: The public Atlassian Statuspage API on status.employinc.com. Eight anonymous endpoints
+    report the rollup availability indicator, every monitored Employ platform component, the dated incident
+    timeline with per-update affected-component transitions, and scheduled maintenance windows. This is
+    the only Employ-operated API surface that requires no credential of any kind and the one an agent
+    can poll today to answer "is Employ up".
+  humanURL: https://status.employinc.com/
+  baseURL: https://status.employinc.com/api/v2
+  tags:
+  - Status
+  - Incidents
+  - Maintenance
+  - Observability
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-status-api-openapi.yml
+  - type: StatusPage
+    url: https://status.employinc.com/
+  - type: Examples
+    url: examples/employ-inc-status-summary.json
+  - type: Examples
+    url: examples/employ-inc-status-components.json
+  - type: Examples
+    url: examples/employ-inc-status-incidents.json
+  - type: Overlay
+    url: overlays/employ-inc-status-api-overlay.yaml
+common:
+- type: DomainSecurity
+  url: security/employ-inc-domain-security.yml
+- type: Authentication
+  url: authentication/employ-inc-authentication.yml
+- type: Website
+  url: https://www.employinc.com/
+- type: Blog
+  url: https://www.employinc.com/blog/
+- type: Support
+  url: https://www.employinc.com/contact/
+- type: TermsOfService
+  url: https://www.employinc.com/terms-of-service/
+- type: PrivacyPolicy
+  url: https://www.employinc.com/privacy-notice-general/
+- type: GitHubOrganization
+  url: https://github.com/Employ-Inc
+- type: StatusPage
+  url: https://status.employinc.com/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/82904967
+- type: LLMsTxt
+  url: llms/employ-inc-llms.txt
+- type: Conventions
+  url: conventions/employ-inc-conventions.yml
+- type: ErrorCatalog
+  url: errors/employ-inc-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/employ-inc-lifecycle.yml
+- type: Conformance
+  url: conformance/employ-inc-conformance.yml
+- type: Compliance
+  url: conformance/employ-inc-conformance.yml
+- type: Security
+  url: security/employ-inc-security-policy.yml
+- type: DataModel
+  url: data-model/employ-inc-data-model.yml
+- type: Packages
+  url: packages/employ-inc-packages.yml
+- type: X-MCPServerCandidate
+  url: mcp/employ-inc-mcp.yml
+- type: Webhooks
+  url: asyncapi/employ-inc-status-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/employ-inc-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/employ-inc-rate-limits.yml
+x-enrichment:
+  date: '2026-09-13'
+  status: enriched
+  artifacts_added: 35
+  pass: local-v3

@@ -1,0 +1,56 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Employ Inc Content API
+  version: 1.0.0
+x-generated: '2026-09-13'
+x-method: generated
+x-source: openapi/employ-inc-content-api-openapi.yml
+x-extends: openapi/employ-inc-content-api-openapi.yml
+x-note: >-
+  The base document is DERIVED by API Evangelist from the route schemas Employ's own discovery
+  document publishes at https://www.employinc.com/wp-json/ (HTTP 200, 2026-09-13). Employ publishes
+  no OpenAPI for this surface. This overlay records the observed runtime behaviour that the
+  discovery document does not carry.
+actions:
+- target: $.info
+  description: Record the probed runtime facts.
+  update:
+    x-ae-probed: '2026-09-13'
+    x-ae-observed-headers:
+      X-WP-Total: 'Present. Observed value 32 on /posts.'
+      X-WP-TotalPages: Present.
+      Link: 'RFC 8288, rel="next" and rel="prev".'
+      cache-control: 'public, max-age=604800 on anonymous read routes.'
+      x-served-by: Fastly CDN nodes.
+      rate-limit-headers: None returned on any probe.
+- target: $.info
+  description: Record which collections are closed to anonymous callers.
+  update:
+    x-ae-gated-collections:
+    - path: /users
+      status: 401
+      code: rest_not_logged_in
+    - path: /comments
+      status: 403
+      code: rest_forbidden_context
+    - path: /wp-abilities/v1/abilities
+      status: 401
+      note: >-
+        Outside this document's namespace, but recorded here because it is the agent-facing
+        capability registry — registered on this site and closed to the public.
+- target: $.info
+  description: Flag the write-safety gaps an agent must know before using any non-GET operation.
+  update:
+    x-ae-write-safety:
+      idempotency: none
+      dry_run: false
+      reversal: 'DELETE is a soft delete unless force=true; no retention window is published by Employ.'
+      reference: conventions/employ-inc-conventions.yml
+- target: $
+  description: Cross-link derived artifacts.
+  update:
+    x-ae-artifacts:
+      conventions: conventions/employ-inc-conventions.yml
+      errors: errors/employ-inc-problem-types.yml
+      data_model: data-model/employ-inc-data-model.yml
+      skills: skills/employ-inc-search-content.md

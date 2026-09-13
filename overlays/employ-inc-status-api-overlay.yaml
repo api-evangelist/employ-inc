@@ -1,0 +1,39 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Employ Inc Status API
+  version: 1.0.0
+x-generated: '2026-09-13'
+x-method: generated
+x-source: openapi/employ-inc-status-api-openapi.yml
+x-extends: openapi/employ-inc-status-api-openapi.yml
+x-note: >-
+  The base document is DERIVED from eight endpoints API Evangelist probed on 2026-09-13, all HTTP
+  200, with schemas read from the bodies those calls returned. Employ publishes no contract for this
+  surface.
+actions:
+- target: $.info
+  description: Record the single most important caveat about this API.
+  update:
+    x-ae-coverage-warning: >-
+      The page monitors ONE component — AI Interview Companion, added 2025-07-25. JazzHR, Lever and
+      Jobvite are not on it. A rollup of "All Systems Operational" from this API is not an answer
+      about whether a customer's ATS is reachable, and any agent surfacing this value must say so.
+    x-ae-page-id: 5t2j43rsvdfx
+    x-ae-incidents-on-record: 5
+    x-ae-probed: '2026-09-13'
+- target: $.info
+  description: Record that this is the provider's only zero-credential surface.
+  update:
+    x-ae-access: >-
+      Fully anonymous. No key, no account, no headers. This is the only Employ-operated API an agent
+      can call with no setup at all, which is why it is the basis of both status skills.
+- target: $
+  description: Cross-link the push surface and the skills built on this contract.
+  update:
+    x-ae-artifacts:
+      webhooks: asyncapi/employ-inc-status-webhooks.yml
+      lifecycle: lifecycle/employ-inc-lifecycle.yml
+      rate_limits: rate-limits/employ-inc-rate-limits.yml
+      skills:
+      - skills/employ-inc-check-platform-status.md
+      - skills/employ-inc-monitor-incidents.md

@@ -1,0 +1,485 @@
+# generated: '2026-09-13'
+# method: derived
+# source: probed https://status.employinc.com/api/v2/*.json (8 endpoints, all HTTP 200)
+openapi: 3.1.0
+info:
+  title: Employ Inc Status API
+  version: v2
+  description: The public Atlassian Statuspage API Employ, Inc. serves at https://status.employinc.com/api/v2. It reports
+    the rollup availability indicator, every monitored component, the dated incident timeline and scheduled maintenance windows
+    for the Employ platform. Every operation is anonymous — no key, no account. This document is DERIVED from the eight endpoints
+    API Evangelist probed on 2026-09-13, all of which returned HTTP 200; schemas were read from the bodies those calls returned.
+  contact:
+    name: Employ, Inc.
+    url: https://www.employinc.com/contact/
+  x-generated-from: probed responses from https://status.employinc.com/api/v2/*.json (2026-09-13, HTTP 200)
+servers:
+- url: https://status.employinc.com/api/v2
+  description: Employ public status page API
+tags:
+- name: Summary
+  description: The one-call rollup of everything on the page.
+- name: Status
+  description: The rollup availability indicator.
+- name: Components
+  description: Individually monitored Employ platform components.
+- name: Incidents
+  description: Incidents and their dated update timelines.
+- name: Maintenance
+  description: Scheduled maintenance windows.
+paths:
+  /summary.json:
+    get:
+      operationId: getStatusSummary
+      summary: Get the full status summary
+      description: Every component, unresolved incident and active scheduled maintenance for the Employ platform in one call,
+        plus the rollup indicator. The endpoint an agent should poll when it wants one answer about Employ availability.
+      tags:
+      - Summary
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  components:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Component'
+                  incidents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Incident'
+                  scheduled_maintenances:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScheduledMaintenance'
+                  status:
+                    $ref: '#/components/schemas/StatusIndicator'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /status.json:
+    get:
+      operationId: getStatusIndicator
+      summary: Get the rollup status indicator
+      description: The single rollup indicator and its human description, e.g. none / All Systems Operational.
+      tags:
+      - Status
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  status:
+                    $ref: '#/components/schemas/StatusIndicator'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /components.json:
+    get:
+      operationId: listComponents
+      summary: List monitored components
+      description: Every component Employ monitors on its public status page, with its current operational state.
+      tags:
+      - Components
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  components:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Component'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /incidents.json:
+    get:
+      operationId: listIncidents
+      summary: List recent incidents
+      description: The most recent Employ platform incidents, each with its full dated update timeline and the components
+        it affected.
+      tags:
+      - Incidents
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  incidents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Incident'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /incidents/unresolved.json:
+    get:
+      operationId: listUnresolvedIncidents
+      summary: List unresolved incidents
+      description: Only the incidents that are still open. An empty array means nothing is currently broken.
+      tags:
+      - Incidents
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  incidents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Incident'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /scheduled-maintenances.json:
+    get:
+      operationId: listScheduledMaintenances
+      summary: List scheduled maintenance windows
+      description: Upcoming, active and recently completed maintenance windows.
+      tags:
+      - Maintenance
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  scheduled_maintenances:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScheduledMaintenance'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /scheduled-maintenances/upcoming.json:
+    get:
+      operationId: listUpcomingMaintenances
+      summary: List upcoming maintenance windows
+      description: Maintenance windows that have been announced but have not started.
+      tags:
+      - Maintenance
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  scheduled_maintenances:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScheduledMaintenance'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /scheduled-maintenances/active.json:
+    get:
+      operationId: listActiveMaintenances
+      summary: List active maintenance windows
+      description: Maintenance windows currently in progress.
+      tags:
+      - Maintenance
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  scheduled_maintenances:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScheduledMaintenance'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+components:
+  schemas:
+    Page:
+      type: object
+      description: Identity of the Employ status page the response belongs to.
+      properties:
+        id:
+          type: string
+          description: Statuspage page identifier (5t2j43rsvdfx for Employ).
+        name:
+          type: string
+          description: Page name.
+        url:
+          type: string
+          format: uri
+          description: Public page URL.
+        time_zone:
+          type: string
+          description: IANA time zone the page renders times in.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the page was last updated.
+      required:
+      - id
+      - name
+      - url
+      - updated_at
+    Component:
+      type: object
+      description: One monitored Employ platform component.
+      properties:
+        id:
+          type: string
+          description: Component identifier.
+        name:
+          type: string
+          description: Component display name, e.g. AI Interview Companion.
+        status:
+          type: string
+          description: Current operational state.
+          enum:
+          - operational
+          - degraded_performance
+          - partial_outage
+          - major_outage
+          - under_maintenance
+        description:
+          type:
+          - string
+          - 'null'
+          description: What the component covers.
+        position:
+          type: integer
+          description: Display order on the page.
+        group:
+          type: boolean
+          description: True when the entry is a group header rather than a component.
+        group_id:
+          type:
+          - string
+          - 'null'
+          description: Parent group identifier, when grouped.
+        showcase:
+          type: boolean
+          description: Whether the component is showcased on the page.
+        only_show_if_degraded:
+          type: boolean
+          description: Whether the component is hidden while operational.
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: Date the component began being monitored.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - status
+    Incident:
+      type: object
+      description: An Employ platform incident and its update timeline.
+      properties: &id001
+        id:
+          type: string
+        name:
+          type: string
+          description: Incident title.
+        status:
+          type: string
+          enum:
+          - investigating
+          - identified
+          - monitoring
+          - resolved
+          - postmortem
+        impact:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+        shortlink:
+          type: string
+          format: uri
+          description: stspg.io short link to the incident.
+        page_id:
+          type: string
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        resolved_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        monitoring_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        incident_updates:
+          type: array
+          items: &id003
+            type: object
+            description: One dated update posted against an incident.
+            properties:
+              id:
+                type: string
+              incident_id:
+                type: string
+              status:
+                type: string
+                enum:
+                - investigating
+                - identified
+                - monitoring
+                - resolved
+                - postmortem
+              body:
+                type: string
+                description: The update text as published.
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              display_at:
+                type: string
+                format: date-time
+              affected_components:
+                type:
+                - array
+                - 'null'
+                items: &id004
+                  type: object
+                  description: A component whose status changed in this update.
+                  properties:
+                    code:
+                      type: string
+                      description: Component identifier.
+                    name:
+                      type: string
+                    old_status:
+                      type: string
+                    new_status:
+                      type: string
+              deliver_notifications:
+                type: boolean
+              custom_tweet:
+                type:
+                - string
+                - 'null'
+              tweet_id:
+                type:
+                - string
+                - 'null'
+            required:
+            - id
+            - status
+            - body
+            - created_at
+      required: &id002
+      - id
+      - name
+      - status
+      - impact
+      - created_at
+    ScheduledMaintenance:
+      type: object
+      description: A scheduled maintenance window and its update timeline.
+      properties: *id001
+      required: *id002
+    IncidentUpdate: *id003
+    AffectedComponent: *id004
+    StatusIndicator:
+      type: object
+      description: The rollup availability indicator for the whole page.
+      properties:
+        indicator:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+          - maintenance
+          description: Machine-readable rollup severity.
+        description:
+          type: string
+          description: Human-readable rollup, e.g. All Systems Operational.
+      required:
+      - indicator
+      - description

@@ -1,0 +1,94 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/employ-inc-status-api-openapi.yml, openapi/employ-inc-content-api-openapi.yml,
+  openapi/employ-inc-events-calendar-rest-api-openapi.json — plus a search for a published Employ
+  MCP server, 2026-09-13
+name: Employ Inc MCP candidate
+description: >-
+  Employ, Inc. publishes NO MCP server. This is a CANDIDATE tool list derived from the operations
+  its own contracts already expose, recorded so the gap is measurable. Nothing here is deployed and
+  no endpoint below exists.
+status: candidate
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+search_evidence:
+- query: Employ Inc MCP server / employinc.com mcp
+  result: none
+  note: >-
+    No mcp.employinc.com host, no /mcp path on any Employ host, no MCP entry in any registry, and no
+    mention of Model Context Protocol anywhere on employinc.com or in its llms.txt.
+- url: https://www.employinc.com/.well-known/oauth-protected-resource
+  status: 404
+- url: https://www.employinc.com/.well-known/oauth-authorization-server
+  status: 404
+- url: https://www.employinc.com/wp-json/wp-abilities/v1/abilities
+  status: 401
+  note: >-
+    The closest thing to an agent surface on this site. WordPress's Abilities API — the registry
+    that exposes site capabilities to agents — IS registered in the discovery document under the
+    wp-abilities/v1 namespace, but it returns HTTP 401 to an anonymous caller, so no capability can
+    be enumerated. If Employ ever opened it, this is where an MCP bridge would read from.
+tools:
+- name: get_employ_status
+  description: Return the rollup availability indicator for the Employ platform.
+  rest: getStatusIndicator
+  auth: none
+  consequence: read
+- name: get_employ_status_summary
+  description: Return every component, open incident and active maintenance window in one call.
+  rest: getStatusSummary
+  auth: none
+  consequence: read
+- name: list_employ_incidents
+  description: List recent Employ platform incidents with their dated update timelines.
+  rest: listIncidents
+  auth: none
+  consequence: read
+- name: list_employ_unresolved_incidents
+  description: List only currently open incidents.
+  rest: listUnresolvedIncidents
+  auth: none
+  consequence: read
+- name: list_employ_maintenance
+  description: List upcoming and active scheduled maintenance windows.
+  rest: listScheduledMaintenances
+  auth: none
+  consequence: read
+- name: search_employ_content
+  description: Search Employ posts, pages, resources and glossary terms by keyword.
+  rest: listSearch
+  auth: none
+  consequence: read
+- name: list_employ_posts
+  description: List Employ blog posts, filterable by category, tag and date.
+  rest: listPosts
+  auth: none
+  consequence: read
+- name: list_employ_resources
+  description: List Employ reports, guides, toolkits and whitepapers.
+  rest: listResources
+  auth: none
+  consequence: read
+- name: list_employ_events
+  description: List Employ events and webinars with venue and organizer inlined.
+  rest: listEvents
+  auth: none
+  consequence: read
+- name: get_employ_event
+  description: Retrieve one Employ event by id or slug.
+  rest: getEventById
+  auth: none
+  consequence: read
+note: >-
+  Every candidate tool is a READ against an anonymously reachable operation, which is why a bridge
+  would be trivial to build and why its absence is notable rather than excusable: the status API in
+  particular is exactly the shape an agent wants and needs no credential at all. Write operations
+  are deliberately excluded from this candidate list — they require a WordPress application password
+  on Employ's own CMS, have no idempotency mechanism (see conventions/), and no published retention
+  window for trashed records, so exposing them to an agent would be unsafe.

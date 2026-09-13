@@ -1,0 +1,98 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://status.employinc.com/ and its API, https://www.employinc.com/lever-sla/,
+  https://www.employinc.com/jobvite-sla/, https://www.employinc.com/legal/, and the namespace list at
+  https://www.employinc.com/wp-json/ — all fetched 2026-09-13
+name: Employ Inc lifecycle
+description: >-
+  Versioning, deprecation, service levels and operational status for Employ, Inc. The service-level
+  commitments are real and published; the API deprecation posture is genuinely absent, and that
+  absence is the finding.
+versioning:
+  scheme: path-segment namespace
+  current:
+  - surface: Content API
+    version: wp/v2
+  - surface: Events Calendar REST API
+    version: tribe/events/v1
+  - surface: TEC Events REST API
+    version: tec/v1
+  - surface: Status API
+    version: v2
+  discoverable_at: https://www.employinc.com/wp-json/
+  note: >-
+    Two generations of the Events Calendar API are registered and served simultaneously —
+    tribe/events/v1 and tec/v1 — with overlapping events, venues and organizers resources. Neither
+    is marked deprecated in its own contract, neither references the other, and nothing tells a
+    consumer which to build against. That is the single most consequential lifecycle gap on this
+    surface.
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy, no Sunset or Deprecation response header, and no deprecated flag on any
+    operation in any of the four contracts. Employ publishes no developer program, so there is no
+    venue in which such a policy could be stated.
+deprecated_operations: []
+change_log:
+  published: false
+  note: >-
+    No API changelog. https://www.employinc.com/company/news/ is a press room and
+    https://www.employinc.com/blog/ is a marketing blog; neither records contract changes. Product
+    release posts ("Winter '25 Release", "Spring '25 Release") announce features across JazzHR,
+    Lever and Jobvite, not API versions.
+status_page:
+  url: https://status.employinc.com/
+  platform: Atlassian Statuspage
+  page_id: 5t2j43rsvdfx
+  machine_readable: true
+  api: https://status.employinc.com/api/v2
+  feeds:
+  - https://status.employinc.com/history.rss
+  - https://status.employinc.com/history.atom
+  - https://status.employinc.com/history.json
+  subscriptions:
+  - email
+  - sms
+  - microsoft-teams-webhook
+  - webhook
+  components_monitored: 1
+  components:
+  - name: AI Interview Companion
+    status_at_probe: operational
+    monitored_since: '2025-07-25'
+  current_status: All Systems Operational
+  incidents_on_record: 5
+  note: >-
+    The status page is real, machine-readable and anonymously queryable, but it monitors exactly ONE
+    component — AI Interview Companion — added in July 2025. The JazzHR, Lever and Jobvite platforms
+    that carry Employ's customer traffic are NOT on this page. An agent polling status.employinc.com
+    learns about one AI feature, not about whether the ATS a customer depends on is up.
+  evidence: 'Probed 2026-09-13: /api/v2/summary.json returned HTTP 200 with components length 1.'
+sla:
+  published: true
+  commitments:
+  - product: Jobvite / Employ standard platform
+    uptime: 99.5%
+    document: https://www.employinc.com/jobvite-sla/
+    remedy: automatic service credit
+    updated: '2023-01-01'
+  - product: Lever
+    uptime: 99.9%
+    document: https://www.employinc.com/lever-sla/
+    remedy: automatic service credit
+    updated: '2022-04-14'
+  note: >-
+    Published uptime commitments with automatic service credits, differing by brand. They are
+    contractual commitments to customers, not API-level SLOs, and neither document mentions API
+    availability or latency specifically.
+support:
+  url: https://www.employinc.com/contact/
+  phone: '888-885-5299'
+  brand_help_centers:
+  - https://help.jazzhr.com/
+  - https://help.lever.co/hc/en-us
+  - https://help.jobvite.com/hc/en-us

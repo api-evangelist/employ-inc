@@ -1,0 +1,99 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://www.employinc.com/security-exhibit/ (HTTP 200), https://www.employinc.com/legal/ (HTTP 200),
+  and negative probes recorded below — all 2026-09-13
+name: Employ Inc security policy and disclosure posture
+description: >-
+  Employ, Inc. publishes a detailed contractual Security Exhibit but operates NO vulnerability
+  disclosure channel of its own. Both halves are recorded here because the difference matters to a
+  researcher deciding where to send a finding.
+security_policy:
+  published: true
+  url: https://www.employinc.com/security-exhibit/
+  title: Security Exhibit
+  effective: '2023-11-21'
+  status: live
+  http_status: 200
+  kind: contractual exhibit incorporated into customer agreements
+  commitments:
+  - id: information-security-management-system
+    detail: >-
+      Employ maintains documented security policies and accepted frameworks for delivery of Services
+      and Support that its personnel are made aware of and must comply with.
+  - id: certification
+    detail: >-
+      "During the term of the Agreement, Employ shall maintain AICPA SOC2 certification or
+      equivalent as well as maintain a lawful transfer mechanism for export of personal data out of
+      the European Union." (section 1.2)
+  - id: testing
+    detail: >-
+      "Employ will conduct at least annual third-party security tests on applications and
+      infrastructure used to support the provision of Services and Support to identify security
+      vulnerabilities. Employ will provide summary reports of security test reports to Customer upon
+      request." (section 1.3)
+  - id: endpoint-controls
+    detail: Full/whole disk encryption and remote data wipe and lock for lost or stolen devices (6.2).
+  - id: malware-prevention
+    detail: Detection and prevention controls with real-time or regular scanning of Employ-owned devices (6.3).
+  - id: logging-and-auditing
+    detail: >-
+      A comprehensive log management program defining scope, generation, transmission, storage,
+      analysis and disposal of logs (6.4).
+  - id: asset-controls
+    detail: >-
+      Physical, organizational and technical controls to protect Customer Data from unauthorized
+      access and disclosure (3.2).
+  - id: people-security
+    detail: >-
+      Documented security policies, security awareness and onboarding training covering passwords,
+      information disposal, social engineering and incident reporting (4.1).
+vulnerability_disclosure:
+  program: false
+  security_txt: false
+  bug_bounty: false
+  disclosure_page: false
+  contact_for_employ_inc: null
+  note: >-
+    Employ, Inc. offers no route for an unsolicited security report. There is no security.txt on any
+    host it controls, no /security or /trust page, no bug bounty, and no security@employinc.com
+    published anywhere. The only security address on the Employ legal page is security@lever.co,
+    which belongs to the Lever brand and is profiled in that repository — it is NOT a holding-company
+    disclosure channel and is not recorded as one here. A researcher with a finding about
+    employinc.com has no published destination and would have to use the general contact form.
+  evidence:
+  - url: https://www.employinc.com/.well-known/security.txt
+    status: 404
+  - url: https://employinc.com/.well-known/security.txt
+    status: 404
+  - url: https://www.employinc.com/security/
+    status: 404
+  - url: https://www.employinc.com/vulnerability-disclosure/
+    status: 404
+  - url: https://hackerone.com/employinc
+    status: 404
+  - url: https://bugcrowd.com/employinc
+    status: 404
+trust_center:
+  published: false
+  evidence:
+  - url: https://trust.employinc.com/
+    status: 0
+    note: Host does not resolve.
+  - url: https://www.employinc.com/trust/
+    status: 404
+  note: >-
+    No trust center. The Security Exhibit is the substitute, and it is a contract term rather than a
+    self-serve evidence portal — a prospect cannot download a SOC 2 report, a pen-test summary or a
+    subprocessor-change feed without asking a salesperson. A published sub-processor list does exist
+    at https://www.employinc.com/sub-processors/ (HTTP 200).
+third_party_security_txt_seen:
+  host: status.employinc.com
+  url: https://status.employinc.com/.well-known/security.txt
+  status: 200
+  belongs_to: Atlassian
+  note: >-
+    Served by the Statuspage platform, not by Employ. Contacts are security@atlassian.com and
+    atlassian.com/trust, and the file declares
+    "Canonical: https://www.atlassian.com/.well-known/security.txt". Explicitly NOT credited to
+    Employ, and no SecurityTxt pointer is emitted anywhere in this record.

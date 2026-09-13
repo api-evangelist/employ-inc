@@ -1,0 +1,38 @@
+generated: '2026-09-13'
+method: generated
+source: >-
+  openapi/employ-inc-status-api-openapi.yml, openapi/employ-inc-content-api-openapi.yml,
+  openapi/employ-inc-events-calendar-rest-api-openapi.json,
+  openapi/employ-inc-tec-events-rest-api-openapi.json
+name: Employ Inc agent skills
+description: >-
+  Packaged operating instructions for the four machine-readable surfaces Employ, Inc. actually
+  operates. Every skill is grounded in an operation that exists in a contract in this repository;
+  none was authored on Employ's behalf as a published artifact — Employ publishes no skills, no
+  AGENTS.md and no agent documentation of any kind.
+skills:
+- name: employ-inc-check-platform-status
+  file: employ-inc-check-platform-status.md
+  api: employ-inc:employ-inc-status-api
+  auth: none
+  summary: Answer whether the Employ platform is up, and disclose that only one component is monitored.
+- name: employ-inc-monitor-incidents
+  file: employ-inc-monitor-incidents.md
+  api: employ-inc:employ-inc-status-api
+  auth: none
+  summary: Read the incident timeline and per-update component transitions.
+- name: employ-inc-search-content
+  file: employ-inc-search-content.md
+  api: employ-inc:employ-inc-content-api
+  auth: none
+  summary: Search and retrieve Employ research, blog posts, glossary and press releases.
+- name: employ-inc-list-events
+  file: employ-inc-list-events.md
+  api: employ-inc:employ-inc-events-calendar-rest-api
+  auth: none
+  summary: List events and webinars, and choose between the three overlapping event contracts.
+provider_published_skills: false
+note: >-
+  All four skills are read-only by design. Write operations exist on the content and events surfaces
+  but have no idempotency mechanism and no published deletion-retention window, so they are excluded
+  from every skill rather than wrapped with caveats.
