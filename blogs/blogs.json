@@ -1,0 +1,14 @@
+{
+  "repo": "employ-inc",
+  "feeds": [
+    {
+      "source": "https://www.employinc.com/",
+      "feed_url": "https://www.employinc.com/rss.xml",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 1,
+  "fetched": "2026-09-13T13:00:00Z"
+}

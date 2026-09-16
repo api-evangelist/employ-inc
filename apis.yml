@@ -24,6 +24,17 @@ tags:
 - Hiring
 - HR Tech
 - Content
+- Event
+- Status
+tags_raw:
+- Human Resources
+- Recruiting
+- Talent Acquisition
+- Applicant Tracking
+- ATS
+- Hiring
+- HR Tech
+- Content
 - Events
 - Status
 maintainers:
@@ -32,82 +43,14 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: employ-inc:employ-inc-content-api
-  name: Employ Inc Content API
-  description: 'The WordPress REST API Employ, Inc. serves at www.employinc.com/wp-json/wp/v2. It exposes
-    the Employ corporate site as JSON: blog posts, marketing and legal pages, media, the resource, case-study,
-    news_item, glossary_terms and teams custom post types, the topic, resource_type, news_item_type and
-    page-type taxonomies, and cross-content-type search. Reads on published content are anonymous; writes,
-    /wp/v2/users and /wp/v2/comments require an authenticated WordPress application password.'
-  humanURL: https://www.employinc.com/wp-json/
-  baseURL: https://www.employinc.com/wp-json/wp/v2
-  tags:
-  - Content
-  - WordPress
-  - Blog
-  - Search
-  - Taxonomy
-  properties:
-  - type: OpenAPI
-    url: openapi/employ-inc-content-api-openapi.yml
-  - type: Examples
-    url: examples/employ-inc-content-types.json
-  - type: Examples
-    url: examples/employ-inc-taxonomies.json
-  - type: Examples
-    url: examples/employ-inc-categories.json
-  - type: Examples
-    url: examples/employ-inc-search.json
-  - type: Overlay
-    url: overlays/employ-inc-content-api-overlay.yaml
-- aid: employ-inc:employ-inc-events-calendar-rest-api
-  name: Employ Inc Events Calendar REST API
-  description: The Events Calendar REST API (tribe/events/v1) for Employ, Inc. events and webinars, with
-    a self-describing OpenAPI 3.0.0 contract the host publishes at its own /doc endpoint. Covers events,
-    venues, organizers, event categories and event tags, each addressable by id or by slug. Read operations
-    are anonymous; create, update and delete require an authenticated WordPress user.
-  humanURL: https://www.employinc.com/events/
-  baseURL: https://www.employinc.com/wp-json/tribe/events/v1
-  tags:
-  - Events
-  - Webinars
-  - Venues
-  - Calendar
-  properties:
-  - type: OpenAPI
-    url: openapi/employ-inc-events-calendar-rest-api-openapi.json
-  - type: APIReference
-    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
-  - type: Examples
-    url: examples/employ-inc-events.json
-  - type: Examples
-    url: examples/employ-inc-event-venues.json
-  - type: Overlay
-    url: overlays/employ-inc-events-calendar-rest-api-overlay.yaml
-- aid: employ-inc:employ-inc-tec-events-rest-api
-  name: Employ Inc TEC Events REST API
-  description: The newer tec/v1 generation of The Events Calendar REST API on www.employinc.com, published
-    as a self-describing OpenAPI 3.0.4 contract at its own /docs endpoint. Covers events, organizers and
-    venues with full CRUD. It runs alongside the older tribe/events/v1 surface rather than replacing it,
-    so both are recorded.
-  humanURL: https://www.employinc.com/events/
-  baseURL: https://www.employinc.com/wp-json/tec/v1
-  tags:
-  - Events
-  - Venues
-  - Calendar
-  properties:
-  - type: OpenAPI
-    url: openapi/employ-inc-tec-events-rest-api-openapi.json
-  - type: APIReference
-    url: https://www.employinc.com/wp-json/tec/v1/docs
 - aid: employ-inc:employ-inc-status-api
   name: Employ Inc Status API
-  description: The public Atlassian Statuspage API on status.employinc.com. Eight anonymous endpoints
-    report the rollup availability indicator, every monitored Employ platform component, the dated incident
-    timeline with per-update affected-component transitions, and scheduled maintenance windows. This is
-    the only Employ-operated API surface that requires no credential of any kind and the one an agent
-    can poll today to answer "is Employ up".
+  description: >-
+    The public Atlassian Statuspage API on status.employinc.com. Eight anonymous endpoints report the
+    rollup availability indicator, every monitored Employ platform component, the dated incident timeline
+    with per-update affected-component transitions, and scheduled maintenance windows. This is the only
+    Employ-operated API surface that requires no credential of any kind and the one an agent can poll
+    today to answer "is Employ up".
   humanURL: https://status.employinc.com/
   baseURL: https://status.employinc.com/api/v2
   tags:
@@ -128,7 +71,791 @@ apis:
     url: examples/employ-inc-status-incidents.json
   - type: Overlay
     url: overlays/employ-inc-status-api-overlay.yaml
+- aid: employ-inc:employ-inc-case-studies-api
+  name: Employ Inc Case Studies API
+  description: Customer case studies.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Case Studies
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-case-studies-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-categories-api
+  name: Employ Inc Categories API
+  description: Blog categories.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-categories-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-common-api
+  name: Employ Inc Common API
+  description: These operations are introduced by the Common library.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Common
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-common-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-components-api
+  name: Employ Inc Components API
+  description: Individually monitored Employ platform components.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Components
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-components-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-doc-api
+  name: Employ Inc Doc API
+  description: The Doc API from Employ Inc — 1 operation(s) for doc.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Doc
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-doc-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-event-categories-api
+  name: Employ Inc Event Categories API
+  description: The event category taxonomy.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Event Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-event-categories-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-events-api
+  name: Employ Inc Events API
+  description: Employ events, as WordPress posts.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-events-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-glossary-api
+  name: Employ Inc Glossary API
+  description: Recruiting and talent-acquisition glossary terms.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Glossary
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-glossary-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-incidents-api
+  name: Employ Inc Incidents API
+  description: Incidents and their dated update timelines.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Incidents
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-incidents-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-landing-pages-api
+  name: Employ Inc Landing Pages API
+  description: Campaign landing pages.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Landing Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-landing-pages-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-maintenance-api
+  name: Employ Inc Maintenance API
+  description: Scheduled maintenance windows.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Maintenance
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-maintenance-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-media-api
+  name: Employ Inc Media API
+  description: Images and files in the Employ media library.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-media-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-news-api
+  name: Employ Inc News API
+  description: Employ press releases and news items.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - News
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-news-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-news-types-api
+  name: Employ Inc News Types API
+  description: The news_item_type taxonomy.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - News Types
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-news-types-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-organizers-api
+  name: Employ Inc Organizers API
+  description: Event organizers, as WordPress posts.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Organizers
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-organizers-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-page-types-api
+  name: Employ Inc Page Types API
+  description: The page-type taxonomy.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Page Types
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-page-types-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-pages-api
+  name: Employ Inc Pages API
+  description: Marketing, product and legal pages on www.employinc.com.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-pages-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-paid-campaigns-api
+  name: Employ Inc Paid Campaigns API
+  description: Paid-search campaign pages.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Paid Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-paid-campaigns-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-posts-api
+  name: Employ Inc Posts API
+  description: Employ blog posts.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-posts-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-resource-types-api
+  name: Employ Inc Resource Types API
+  description: The resource_type taxonomy.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Resource Types
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-resource-types-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-resources-api
+  name: Employ Inc Resources API
+  description: 'Gated resources: reports, guides, toolkits and whitepapers.'
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-resources-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-search-api
+  name: Employ Inc Search API
+  description: Cross-content-type search over published site content.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-search-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-statuses-api
+  name: Employ Inc Statuses API
+  description: Registered post statuses.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Statuses
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-statuses-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-summary-api
+  name: Employ Inc Summary API
+  description: The one-call rollup of everything on the page.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Summary
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-summary-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-tags-api
+  name: Employ Inc Tags API
+  description: Blog tags.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-tags-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-taxonomies-api
+  name: Employ Inc Taxonomies API
+  description: Registered taxonomies on the Employ site.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Taxonomies
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-taxonomies-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-teams-api
+  name: Employ Inc Teams API
+  description: Employ leadership and team member profiles.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-teams-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-topics-api
+  name: Employ Inc Topics API
+  description: The topic taxonomy applied to resources and posts.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Topics
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-topics-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-types-api
+  name: Employ Inc Types API
+  description: Registered content types on the Employ site.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Types
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-types-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
+- aid: employ-inc:employ-inc-venues-api
+  name: Employ Inc Venues API
+  description: Event venues, as WordPress posts.
+  humanURL: https://www.employinc.com/wp-json/
+  baseURL: https://www.employinc.com/wp-json/wp/v2
+  tags:
+  - Venues
+  properties:
+  - type: OpenAPI
+    url: openapi/employ-inc-venues-api-openapi.yml
+  - type: Examples
+    url: examples/employ-inc-content-types.json
+  - type: Examples
+    url: examples/employ-inc-taxonomies.json
+  - type: Examples
+    url: examples/employ-inc-categories.json
+  - type: Examples
+    url: examples/employ-inc-search.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tribe/events/v1/doc
+  - type: Examples
+    url: examples/employ-inc-events.json
+  - type: Examples
+    url: examples/employ-inc-event-venues.json
+  - type: APIReference
+    url: https://www.employinc.com/wp-json/tec/v1/docs
 common:
+- type: Overlay
+  url: overlays/employ-inc-content-api-overlay.yaml
+- type: Overlay
+  url: overlays/employ-inc-events-calendar-rest-api-overlay.yaml
 - type: DomainSecurity
   url: security/employ-inc-domain-security.yml
 - type: Authentication
