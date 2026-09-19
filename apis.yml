@@ -22,7 +22,6 @@ tags:
 - Applicant Tracking
 - ATS
 - Hiring
-- HR Tech
 - Content
 - Event
 - Status
@@ -233,6 +232,8 @@ apis:
   humanURL: https://www.employinc.com/wp-json/
   baseURL: https://www.employinc.com/wp-json/wp/v2
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -649,6 +650,8 @@ apis:
   humanURL: https://www.employinc.com/wp-json/
   baseURL: https://www.employinc.com/wp-json/wp/v2
   tags:
+  - Status
+  tags_raw:
   - Statuses
   properties:
   - type: OpenAPI
@@ -727,6 +730,8 @@ apis:
   humanURL: https://www.employinc.com/wp-json/
   baseURL: https://www.employinc.com/wp-json/wp/v2
   tags:
+  - taxonomies
+  tags_raw:
   - Taxonomies
   properties:
   - type: OpenAPI
@@ -753,6 +758,8 @@ apis:
   humanURL: https://www.employinc.com/wp-json/
   baseURL: https://www.employinc.com/wp-json/wp/v2
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -779,6 +786,8 @@ apis:
   humanURL: https://www.employinc.com/wp-json/
   baseURL: https://www.employinc.com/wp-json/wp/v2
   tags:
+  - Topic
+  tags_raw:
   - Topics
   properties:
   - type: OpenAPI
