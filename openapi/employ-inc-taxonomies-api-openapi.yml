@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  title: Employ Inc Content Taxonomies API
+  version: wp/v2
+  description: The WordPress REST API served by Employ, Inc.
+  contact:
+    name: Employ, Inc.
+    url: https://www.employinc.com/contact/
+  termsOfService: https://www.employinc.com/terms-of-service/
+  x-generated-from: https://www.employinc.com/wp-json/ (WordPress REST API discovery document, fetched 2026-09-13, HTTP 200)
+servers:
+- url: https://www.employinc.com/wp-json/wp/v2
+  description: Production — Employ, Inc. corporate site
+tags:
+- name: Taxonomies
+  description: Registered taxonomies on the Employ site.
+paths:
+  /wp/v2/taxonomies:
+    get:
+      operationId: listTaxonomies
+      summary: List taxonomies
+      description: Registered taxonomies on the Employ site.
+      tags:
+      - Taxonomies
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to taxonomies associated with a specific post type.
+      security:
+      - {}
+      - applicationPassword: []
+  /wp/v2/taxonomies/{taxonomy}:
+    get:
+      operationId: getTaxonomiesById
+      summary: Retrieve a single taxonomie
+      description: Registered taxonomies on the Employ site.
+      tags:
+      - Taxonomies
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: taxonomy
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Identifier of the Taxonomie record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: taxonomy
+        in: query
+        required: false
+        schema:
+          type: string
+        description: An alphanumeric identifier for the taxonomy.
+      security:
+      - {}
+      - applicationPassword: []
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST API error envelope.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_post_invalid_id.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          description: Error detail.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+      required:
+      - code
+      - message
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: 'WordPress application password (HTTP Basic). Authorization endpoint: https://www.employinc.com/wp-admin/authorize-application.php. Declared by the site''s own discovery document under authentication.application-passwords.'

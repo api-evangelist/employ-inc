@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Employ Inc Status API
+  title: Employ Inc Status Components API
   version: v2
   description: The public Atlassian Statuspage API Employ, Inc. serves at https://status.employinc.com/api/v2. It reports the rollup availability indicator, every monitored component, the dated incident timeline and scheduled maintenance windows for the Employ platform. Every operation is anonymous — no key, no account. This document is DERIVED from the eight endpoints API Evangelist probed on 2026-09-13, all of which returned HTTP 200; schemas were read from the bodies those calls returned.
   contact:
@@ -11,16 +11,16 @@ servers:
 - url: https://status.employinc.com/api/v2
   description: Employ public status page API
 tags:
-- name: Status
-  description: The rollup availability indicator.
+- name: Components
+  description: Individually monitored Employ platform components.
 paths:
-  /status.json:
+  /components.json:
     get:
-      operationId: getStatusIndicator
-      summary: Get the rollup status indicator
-      description: The single rollup indicator and its human description, e.g. none / All Systems Operational.
+      operationId: listComponents
+      summary: List monitored components
+      description: Every component Employ monitors on its public status page, with its current operational state.
       tags:
-      - Status
+      - Components
       security:
       - {}
       responses:
@@ -33,8 +33,10 @@ paths:
                 properties:
                   page:
                     $ref: '#/components/schemas/Page'
-                  status:
-                    $ref: '#/components/schemas/StatusIndicator'
+                  components:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Component'
                 required:
                 - page
         '404':
@@ -67,22 +69,59 @@ components:
       - name
       - url
       - updated_at
-    StatusIndicator:
+    Component:
       type: object
-      description: The rollup availability indicator for the whole page.
+      description: One monitored Employ platform component.
       properties:
-        indicator:
+        id:
           type: string
+          description: Component identifier.
+        name:
+          type: string
+          description: Component display name, e.g. AI Interview Companion.
+        status:
+          type: string
+          description: Current operational state.
           enum:
-          - none
-          - minor
-          - major
-          - critical
-          - maintenance
-          description: Machine-readable rollup severity.
+          - operational
+          - degraded_performance
+          - partial_outage
+          - major_outage
+          - under_maintenance
         description:
+          type:
+          - string
+          - 'null'
+          description: What the component covers.
+        position:
+          type: integer
+          description: Display order on the page.
+        group:
+          type: boolean
+          description: True when the entry is a group header rather than a component.
+        group_id:
+          type:
+          - string
+          - 'null'
+          description: Parent group identifier, when grouped.
+        showcase:
+          type: boolean
+          description: Whether the component is showcased on the page.
+        only_show_if_degraded:
+          type: boolean
+          description: Whether the component is hidden while operational.
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: Date the component began being monitored.
+        created_at:
           type: string
-          description: Human-readable rollup, e.g. All Systems Operational.
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
       required:
-      - indicator
-      - description
+      - id
+      - name
+      - status

@@ -1,0 +1,1254 @@
+openapi: 3.2.0
+info:
+  title: Employ Inc Venues API
+  x-refined-note:
+  - x-generated-from differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Venues across 2 of this provider''s published API definitions: employ-inc-content-api-openapi.yml, employ-inc-events-calendar-rest-api-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://www.employinc.com/wp-json/wp/v2
+  description: Production — Employ, Inc. corporate site
+- url: https://www.employinc.com/wp-json/tribe/events/v1/
+tags:
+- name: Venues
+  description: Event venues, as WordPress posts.
+paths:
+  /wp/v2/tribe_venue:
+    get:
+      operationId: listVenues
+      summary: List venues
+      description: Event venues, as WordPress posts.
+      tags:
+      - Venues
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: after
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: Limit response to posts published after a given ISO8601 compliant date.
+      - name: author
+        in: query
+        required: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+        description: Limit result set to posts assigned to specific authors.
+      - name: author_exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+        description: Ensure result set excludes posts assigned to specific authors.
+      - name: before
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: Limit response to posts published before a given ISO8601 compliant date.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: integer
+        description: Limit result set to specific IDs.
+      - name: modified_after
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+      - name: modified_before
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+        description: Sort collection by post attribute.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          default: []
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+        description: Array of column names to be searched.
+      - name: search_semantics
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - exact
+        description: How to interpret the search input.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to posts with one or more specific slugs.
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: array
+          default: publish
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - acf-disabled
+            - nab_ready
+            - nab_scheduled
+            - nab_running
+            - nab_paused
+            - nab_paused_draft
+            - nab_finished
+            - nab_hidden
+            - tribe-ea-success
+            - tribe-ea-failed
+            - tribe-ea-schedule
+            - tribe-ea-pending
+            - tribe-ea-draft
+            - tribe-ignored
+            - any
+        description: Limit result set to posts assigned one or more statuses.
+      security:
+      - {}
+      - applicationPassword: []
+    post:
+      operationId: createVenues
+      summary: Create venues
+      description: Event venues, as WordPress posts.
+      tags:
+      - Venues
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: integer
+                  description: The ID for the author of the post.
+                content:
+                  type: object
+                  description: The content for the post.
+                date:
+                  type: string
+                  description: The date the post was published, in the site's timezone.
+                date_gmt:
+                  type: string
+                  description: The date the post was published, as GMT.
+                excerpt:
+                  type: object
+                  description: The excerpt for the post.
+                featured_media:
+                  type: integer
+                  description: The ID of the featured media for the post.
+                meta:
+                  type: object
+                  description: Meta fields.
+                password:
+                  type: string
+                  description: A password to protect access to the content and excerpt.
+                slug:
+                  type: string
+                  description: An alphanumeric identifier for the post unique to its type.
+                status:
+                  type: string
+                  description: A named status for the post.
+                  enum:
+                  - publish
+                  - future
+                  - draft
+                  - pending
+                  - private
+                  - acf-disabled
+                  - nab_ready
+                  - nab_scheduled
+                  - nab_running
+                  - nab_paused
+                  - nab_paused_draft
+                  - nab_finished
+                  - nab_hidden
+                  - tribe-ea-success
+                  - tribe-ea-failed
+                  - tribe-ea-schedule
+                  - tribe-ea-pending
+                  - tribe-ea-draft
+                  - tribe-ignored
+                template:
+                  type: string
+                  description: The theme file to use to display the post.
+                title:
+                  type: object
+                  description: The title for the post.
+      security:
+      - applicationPassword: []
+    servers:
+    - url: https://www.employinc.com/wp-json/wp/v2
+      description: Production — Employ, Inc. corporate site
+  /wp/v2/tribe_venue/{id}:
+    get:
+      operationId: getVenuesById
+      summary: Retrieve a single venue
+      description: Event venues, as WordPress posts.
+      tags:
+      - Venues
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Identifier of the Venue record.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: excerpt_length
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Override the default excerpt length.
+      - name: id
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Unique identifier for the post.
+      - name: password
+        in: query
+        required: false
+        schema:
+          type: string
+        description: The password for the post if it is password protected.
+      security:
+      - {}
+      - applicationPassword: []
+    post:
+      operationId: updateVenuesById
+      summary: Update a single venue
+      description: Event venues, as WordPress posts.
+      tags:
+      - Venues
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Identifier of the Venue record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: integer
+                  description: The ID for the author of the post.
+                content:
+                  type: object
+                  description: The content for the post.
+                date:
+                  type: string
+                  description: The date the post was published, in the site's timezone.
+                date_gmt:
+                  type: string
+                  description: The date the post was published, as GMT.
+                excerpt:
+                  type: object
+                  description: The excerpt for the post.
+                featured_media:
+                  type: integer
+                  description: The ID of the featured media for the post.
+                id:
+                  type: integer
+                  description: Unique identifier for the post.
+                meta:
+                  type: object
+                  description: Meta fields.
+                password:
+                  type: string
+                  description: A password to protect access to the content and excerpt.
+                slug:
+                  type: string
+                  description: An alphanumeric identifier for the post unique to its type.
+                status:
+                  type: string
+                  description: A named status for the post.
+                  enum:
+                  - publish
+                  - future
+                  - draft
+                  - pending
+                  - private
+                  - acf-disabled
+                  - nab_ready
+                  - nab_scheduled
+                  - nab_running
+                  - nab_paused
+                  - nab_paused_draft
+                  - nab_finished
+                  - nab_hidden
+                  - tribe-ea-success
+                  - tribe-ea-failed
+                  - tribe-ea-schedule
+                  - tribe-ea-pending
+                  - tribe-ea-draft
+                  - tribe-ignored
+                template:
+                  type: string
+                  description: The theme file to use to display the post.
+                title:
+                  type: object
+                  description: The title for the post.
+      security:
+      - applicationPassword: []
+    put:
+      operationId: updateVenuesById
+      summary: Update a single venue
+      description: Event venues, as WordPress posts.
+      tags:
+      - Venues
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Identifier of the Venue record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: integer
+                  description: The ID for the author of the post.
+                content:
+                  type: object
+                  description: The content for the post.
+                date:
+                  type: string
+                  description: The date the post was published, in the site's timezone.
+                date_gmt:
+                  type: string
+                  description: The date the post was published, as GMT.
+                excerpt:
+                  type: object
+                  description: The excerpt for the post.
+                featured_media:
+                  type: integer
+                  description: The ID of the featured media for the post.
+                id:
+                  type: integer
+                  description: Unique identifier for the post.
+                meta:
+                  type: object
+                  description: Meta fields.
+                password:
+                  type: string
+                  description: A password to protect access to the content and excerpt.
+                slug:
+                  type: string
+                  description: An alphanumeric identifier for the post unique to its type.
+                status:
+                  type: string
+                  description: A named status for the post.
+                  enum:
+                  - publish
+                  - future
+                  - draft
+                  - pending
+                  - private
+                  - acf-disabled
+                  - nab_ready
+                  - nab_scheduled
+                  - nab_running
+                  - nab_paused
+                  - nab_paused_draft
+                  - nab_finished
+                  - nab_hidden
+                  - tribe-ea-success
+                  - tribe-ea-failed
+                  - tribe-ea-schedule
+                  - tribe-ea-pending
+                  - tribe-ea-draft
+                  - tribe-ignored
+                template:
+                  type: string
+                  description: The theme file to use to display the post.
+                title:
+                  type: object
+                  description: The title for the post.
+      security:
+      - applicationPassword: []
+    delete:
+      operationId: deleteVenuesById
+      summary: Delete a single venue
+      description: Event venues, as WordPress posts.
+      tags:
+      - Venues
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the authenticated user cannot perform this action.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No record found for the requested identifier.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: Identifier of the Venue record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                force:
+                  type: boolean
+                  description: Whether to bypass Trash and force deletion.
+                id:
+                  type: integer
+                  description: Unique identifier for the post.
+      security:
+      - applicationPassword: []
+    servers:
+    - url: https://www.employinc.com/wp-json/wp/v2
+      description: Production — Employ, Inc. corporate site
+  /venues:
+    get:
+      parameters:
+      - in: query
+        schema:
+          type: integer
+        description: The archive page to return
+        required: false
+        name: page
+      - in: query
+        schema:
+          type: integer
+        description: The number of venues to return on each page
+        required: false
+        name: per_page
+      - in: query
+        schema:
+          type: string
+        description: Venues should contain the specified string in the title, description or custom fields
+        required: false
+        name: search
+      - in: query
+        schema:
+          type: integer
+        description: Venues should be related to this event
+        required: false
+        name: event
+      - in: query
+        schema:
+          type: boolean
+        description: Venues should have events associated to them
+        required: false
+        name: has_events
+      - in: query
+        schema:
+          type: boolean
+        description: Venues should have upcoming events associated to them
+        required: false
+        name: only_with_upcoming
+      - in: query
+        schema:
+          type: string
+        description: The organizer post status
+        required: false
+        name: status
+      responses:
+        '200':
+          description: Returns all the venues matching the search criteria
+          content:
+            application/json:
+              schema:
+                title: venues
+                type: array
+                items:
+                  $ref: '#/components/schemas/Venue'
+        '400':
+          description: One or more of the specified query variables has a bad format
+        '404':
+          description: The requested page was not found.
+      tags:
+      - Venues
+      summary: Get venues
+      x-summary-source: derived
+      operationId: getVenues
+      x-operation-id-source: derived
+    servers:
+    - url: https://www.employinc.com/wp-json/tribe/events/v1/
+  /venues/{id}:
+    get:
+      parameters:
+      - in: path
+        schema:
+          type: integer
+        description: the venue post ID
+        required: true
+        name: id
+      responses:
+        '200':
+          description: Returns the data of the venue with the specified post ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '400':
+          description: The venue post ID is missing.
+        '403':
+          description: The venue with the specified ID is not accessible.
+        '404':
+          description: A venue with the specified post ID does not exist.
+      tags:
+      - Venues
+      summary: Get venues by id
+      x-summary-source: derived
+      operationId: getVenuesById
+      x-operation-id-source: derived
+    post:
+      parameters:
+      - in: path
+        schema:
+          type: integer
+        description: the venue post ID
+        required: true
+        name: id
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                author:
+                  description: The venue author ID
+                  type: integer
+                date:
+                  description: The venue publication date
+                  type: string
+                date_utc:
+                  description: The venue publication date (UTC time zone)
+                  type: string
+                venue:
+                  description: The venue name
+                  type: string
+                description:
+                  description: The venue description
+                  type: string
+                status:
+                  description: The venue post status
+                  type: string
+                show_map:
+                  description: Whether events linked to the venue should show a map or not
+                  type: string
+                show_map_link:
+                  description: Whether events linked to the venue should show a map link or not
+                  type: string
+                address:
+                  description: The venue address
+                  type: string
+                city:
+                  description: The venue city
+                  type: string
+                country:
+                  description: The venue country
+                  type: string
+                province:
+                  description: The venue province
+                  type: string
+                state:
+                  description: The venue state
+                  type: string
+                zip:
+                  description: The venue ZIP code
+                  type: string
+                phone:
+                  description: The venue phone number
+                  type: string
+                stateprovince:
+                  description: The venue state and province
+                  type: string
+                website:
+                  description: The venue website URL
+                  type: string
+                image:
+                  description: The organizer featured image ID or URL
+                  type: string
+      responses:
+        '200':
+          description: Returns the data of the updated venue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '201':
+          description: Returns the data of the created venue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '400':
+          description: A required parameter is missing or an input parameter is in the wrong format
+        '403':
+          description: The user is not authorized to create venues
+      tags:
+      - Venues
+      summary: Create venues by id
+      x-summary-source: derived
+      operationId: postVenuesById
+      x-operation-id-source: derived
+    delete:
+      parameters:
+      - in: path
+        schema:
+          type: integer
+        description: the venue post ID
+        required: true
+        name: id
+      responses:
+        '200':
+          description: Deletes a venue and returns its data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '400':
+          description: The venue post ID is missing or does not exist.
+        '403':
+          description: The current user cannot delete the venue with the specified ID.
+        '410':
+          description: The venue with the specified ID has been deleted already.
+        '500':
+          description: The venue with the specified ID could not be deleted.
+      tags:
+      - Venues
+      summary: Delete venues by id
+      x-summary-source: derived
+      operationId: deleteVenuesById
+      x-operation-id-source: derived
+    servers:
+    - url: https://www.employinc.com/wp-json/tribe/events/v1/
+  /venues/by-slug/{slug}:
+    get:
+      parameters:
+      - in: path
+        schema:
+          type: string
+        description: the venue post name
+        required: true
+        name: slug
+      responses:
+        '200':
+          description: Returns the data of the venue with the specified post ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '400':
+          description: The venue post ID is missing.
+        '403':
+          description: The venue with the specified ID is not accessible.
+        '404':
+          description: A venue with the specified post ID does not exist.
+      tags:
+      - Venues
+      summary: Get venues by slug by slug
+      x-summary-source: derived
+      operationId: getVenuesBySlugBySlug
+      x-operation-id-source: derived
+    post:
+      parameters:
+      - in: path
+        schema:
+          type: string
+        description: the venue post name
+        required: true
+        name: slug
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                author:
+                  description: The venue author ID
+                  type: integer
+                date:
+                  description: The venue publication date
+                  type: string
+                date_utc:
+                  description: The venue publication date (UTC time zone)
+                  type: string
+                venue:
+                  description: The venue name
+                  type: string
+                description:
+                  description: The venue description
+                  type: string
+                status:
+                  description: The venue post status
+                  type: string
+                show_map:
+                  description: Whether events linked to the venue should show a map or not
+                  type: string
+                show_map_link:
+                  description: Whether events linked to the venue should show a map link or not
+                  type: string
+                address:
+                  description: The venue address
+                  type: string
+                city:
+                  description: The venue city
+                  type: string
+                country:
+                  description: The venue country
+                  type: string
+                province:
+                  description: The venue province
+                  type: string
+                state:
+                  description: The venue state
+                  type: string
+                zip:
+                  description: The venue ZIP code
+                  type: string
+                phone:
+                  description: The venue phone number
+                  type: string
+                stateprovince:
+                  description: The venue state and province
+                  type: string
+                website:
+                  description: The venue website URL
+                  type: string
+                image:
+                  description: The organizer featured image ID or URL
+                  type: string
+      responses:
+        '200':
+          description: Returns the data of the updated venue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '201':
+          description: Returns the data of the created venue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '400':
+          description: A required parameter is missing or an input parameter is in the wrong format
+        '403':
+          description: The user is not authorized to create venues
+      tags:
+      - Venues
+      summary: Create venues by slug by slug
+      x-summary-source: derived
+      operationId: postVenuesBySlugBySlug
+      x-operation-id-source: derived
+    delete:
+      parameters:
+      - in: path
+        schema:
+          type: string
+        description: the venue post name
+        required: true
+        name: slug
+      responses:
+        '200':
+          description: Deletes a venue and returns its data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venue'
+        '400':
+          description: The venue post ID is missing or does not exist.
+        '403':
+          description: The current user cannot delete the venue with the specified ID.
+        '410':
+          description: The venue with the specified ID has been deleted already.
+        '500':
+          description: The venue with the specified ID could not be deleted.
+      tags:
+      - Venues
+      summary: Delete venues by slug by slug
+      x-summary-source: derived
+      operationId: deleteVenuesBySlugBySlug
+      x-operation-id-source: derived
+    servers:
+    - url: https://www.employinc.com/wp-json/tribe/events/v1/
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST API error envelope.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_post_invalid_id.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          description: Error detail.
+          properties:
+            status:
+              type: integer
+              description: HTTP status code.
+      required:
+      - code
+      - message
+    Image:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL to the full size version of the image
+        id:
+          type: integer
+          description: The image WordPress post ID
+        extension:
+          type: string
+          description: The image file extension
+        width:
+          type: integer
+          description: The image natural width in pixels
+        height:
+          type: integer
+          description: The image natural height in pixels
+        sizes:
+          type: array
+          description: The details about each size available for the image
+          items:
+            $ref: '#/components/schemas/ImageSize'
+    Venue:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The venue WordPress post ID
+        global_id:
+          type: string
+          description: The venue ID used to globally identify in Event Aggregator
+        global_id_lineage:
+          type: array
+          items:
+            type: string
+          description: An Array containing the lineage of where this organizer comes from, this should not change after the organizer is created.
+        author:
+          type: integer
+          description: The venue author WordPress post ID
+        date:
+          type: string
+          description: The venue creation date in the site time zone
+        date_utc:
+          type: string
+          description: The venue creation date in UTC time
+        modified:
+          type: string
+          description: The venue last modification date in the site time zone
+        modified_utc:
+          type: string
+          description: The venue last modification date in UTC time
+        status:
+          type: string
+          description: The venue status
+        url:
+          type: string
+          description: The URL to the venue page
+        venue:
+          type: string
+          description: The venue name
+        description:
+          type: string
+          description: The venue long description
+        excerpt:
+          type: string
+          description: The venue short description
+        slug:
+          type: string
+          description: The venue slug
+        image:
+          type: string
+          description: The event featured image details if set
+          $ref: '#/components/schemas/Image'
+        show_map:
+          type: boolean
+          description: Whether the map should be shown for the venue or not
+        show_map_link:
+          type: boolean
+          description: Whether the map link should be shown for the venue or not
+        address:
+          type: string
+          description: The venue address
+        city:
+          type: string
+          description: The venue city
+        country:
+          type: string
+          description: The venue country
+        province:
+          type: string
+          description: The venue province
+        state:
+          type: string
+          description: The venue state
+        zip:
+          type: string
+          description: The venue ZIP code
+        phone:
+          type: string
+          description: The venue phone number
+        website:
+          type: string
+          description: The venue website URL
+        stateprovince:
+          type: string
+          description: The venue state or province
+        geo_lat:
+          type: number
+          format: double
+          description: The venue geo latitude
+        geo_lng:
+          type: number
+          format: double
+          description: The venue geo longitude
+    ImageSize:
+      type: object
+      properties:
+        width:
+          type: integer
+          description: The image width in pixels in the specified size
+        height:
+          type: integer
+          description: The image height in pixels in the specified size
+        mime-type:
+          type: string
+          description: The image mime-type
+        url:
+          type: string
+          format: uri
+          description: The link to the image in the specified size on the site
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: 'WordPress application password (HTTP Basic). Authorization endpoint: https://www.employinc.com/wp-admin/authorize-application.php. Declared by the site''s own discovery document under authentication.application-passwords.'
+x-refined-from:
+- employ-inc-content-api-openapi.yml
+- employ-inc-events-calendar-rest-api-openapi.json

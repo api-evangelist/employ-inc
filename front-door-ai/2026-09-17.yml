@@ -1,0 +1,26 @@
+# Front Door AI Index — employ-inc — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: employ-inc
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.employinc.com
+  final_host: www.employinc.com
+  ownership: own
+  owner: employ-inc
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 56
+  host_score: 56
+  density: 26.25
+  words: 2133
+  tiers:
+    agentic: 0
+    core: 56
+    model: 0
+  ambiguous: 10
+  top_terms:
+    AI: 56
+    automation: 10

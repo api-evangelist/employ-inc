@@ -1,0 +1,217 @@
+openapi: 3.2.0
+info:
+  title: Employ Inc Status Incidents API
+  version: v2
+  description: The public Atlassian Statuspage API Employ, Inc. serves at https://status.employinc.com/api/v2. It reports the rollup availability indicator, every monitored component, the dated incident timeline and scheduled maintenance windows for the Employ platform. Every operation is anonymous — no key, no account. This document is DERIVED from the eight endpoints API Evangelist probed on 2026-09-13, all of which returned HTTP 200; schemas were read from the bodies those calls returned.
+  contact:
+    name: Employ, Inc.
+    url: https://www.employinc.com/contact/
+  x-generated-from: probed responses from https://status.employinc.com/api/v2/*.json (2026-09-13, HTTP 200)
+servers:
+- url: https://status.employinc.com/api/v2
+  description: Employ public status page API
+tags:
+- name: Incidents
+  description: Incidents and their dated update timelines.
+paths:
+  /incidents.json:
+    get:
+      operationId: listIncidents
+      summary: List recent incidents
+      description: The most recent Employ platform incidents, each with its full dated update timeline and the components it affected.
+      tags:
+      - Incidents
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  incidents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Incident'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+  /incidents/unresolved.json:
+    get:
+      operationId: listUnresolvedIncidents
+      summary: List unresolved incidents
+      description: Only the incidents that are still open. An empty array means nothing is currently broken.
+      tags:
+      - Incidents
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    $ref: '#/components/schemas/Page'
+                  incidents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Incident'
+                required:
+                - page
+        '404':
+          description: No status page at this host.
+components:
+  schemas:
+    Page:
+      type: object
+      description: Identity of the Employ status page the response belongs to.
+      properties:
+        id:
+          type: string
+          description: Statuspage page identifier (5t2j43rsvdfx for Employ).
+        name:
+          type: string
+          description: Page name.
+        url:
+          type: string
+          format: uri
+          description: Public page URL.
+        time_zone:
+          type: string
+          description: IANA time zone the page renders times in.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the page was last updated.
+      required:
+      - id
+      - name
+      - url
+      - updated_at
+    Incident:
+      type: object
+      description: An Employ platform incident and its update timeline.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: Incident title.
+        status:
+          type: string
+          enum:
+          - investigating
+          - identified
+          - monitoring
+          - resolved
+          - postmortem
+        impact:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+        shortlink:
+          type: string
+          format: uri
+          description: stspg.io short link to the incident.
+        page_id:
+          type: string
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        resolved_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        monitoring_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        incident_updates:
+          type: array
+          items:
+            type: object
+            description: One dated update posted against an incident.
+            properties:
+              id:
+                type: string
+              incident_id:
+                type: string
+              status:
+                type: string
+                enum:
+                - investigating
+                - identified
+                - monitoring
+                - resolved
+                - postmortem
+              body:
+                type: string
+                description: The update text as published.
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              display_at:
+                type: string
+                format: date-time
+              affected_components:
+                type:
+                - array
+                - 'null'
+                items:
+                  type: object
+                  description: A component whose status changed in this update.
+                  properties:
+                    code:
+                      type: string
+                      description: Component identifier.
+                    name:
+                      type: string
+                    old_status:
+                      type: string
+                    new_status:
+                      type: string
+              deliver_notifications:
+                type: boolean
+              custom_tweet:
+                type:
+                - string
+                - 'null'
+              tweet_id:
+                type:
+                - string
+                - 'null'
+            required:
+            - id
+            - status
+            - body
+            - created_at
+      required:
+      - id
+      - name
+      - status
+      - impact
+      - created_at
