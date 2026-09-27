@@ -53,6 +53,25 @@ paths:
           description: No status page at this host.
 components:
   schemas:
+    StatusIndicator:
+      type: object
+      description: The rollup availability indicator for the whole page.
+      properties:
+        indicator:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+          - maintenance
+          description: Machine-readable rollup severity.
+        description:
+          type: string
+          description: Human-readable rollup, e.g. All Systems Operational.
+      required:
+      - indicator
+      - description
     Page:
       type: object
       description: Identity of the Employ status page the response belongs to.
@@ -79,62 +98,6 @@ components:
       - name
       - url
       - updated_at
-    Component:
-      type: object
-      description: One monitored Employ platform component.
-      properties:
-        id:
-          type: string
-          description: Component identifier.
-        name:
-          type: string
-          description: Component display name, e.g. AI Interview Companion.
-        status:
-          type: string
-          description: Current operational state.
-          enum:
-          - operational
-          - degraded_performance
-          - partial_outage
-          - major_outage
-          - under_maintenance
-        description:
-          type:
-          - string
-          - 'null'
-          description: What the component covers.
-        position:
-          type: integer
-          description: Display order on the page.
-        group:
-          type: boolean
-          description: True when the entry is a group header rather than a component.
-        group_id:
-          type:
-          - string
-          - 'null'
-          description: Parent group identifier, when grouped.
-        showcase:
-          type: boolean
-          description: Whether the component is showcased on the page.
-        only_show_if_degraded:
-          type: boolean
-          description: Whether the component is hidden while operational.
-        start_date:
-          type:
-          - string
-          - 'null'
-          description: Date the component began being monitored.
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
-      - status
     ScheduledMaintenance:
       type: object
       description: A scheduled maintenance window and its update timeline.
@@ -373,22 +336,59 @@ components:
       - status
       - impact
       - created_at
-    StatusIndicator:
+    Component:
       type: object
-      description: The rollup availability indicator for the whole page.
+      description: One monitored Employ platform component.
       properties:
-        indicator:
+        id:
           type: string
+          description: Component identifier.
+        name:
+          type: string
+          description: Component display name, e.g. AI Interview Companion.
+        status:
+          type: string
+          description: Current operational state.
           enum:
-          - none
-          - minor
-          - major
-          - critical
-          - maintenance
-          description: Machine-readable rollup severity.
+          - operational
+          - degraded_performance
+          - partial_outage
+          - major_outage
+          - under_maintenance
         description:
+          type:
+          - string
+          - 'null'
+          description: What the component covers.
+        position:
+          type: integer
+          description: Display order on the page.
+        group:
+          type: boolean
+          description: True when the entry is a group header rather than a component.
+        group_id:
+          type:
+          - string
+          - 'null'
+          description: Parent group identifier, when grouped.
+        showcase:
+          type: boolean
+          description: Whether the component is showcased on the page.
+        only_show_if_degraded:
+          type: boolean
+          description: Whether the component is hidden while operational.
+        start_date:
+          type:
+          - string
+          - 'null'
+          description: Date the component began being monitored.
+        created_at:
           type: string
-          description: Human-readable rollup, e.g. All Systems Operational.
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
       required:
-      - indicator
-      - description
+      - id
+      - name
+      - status
