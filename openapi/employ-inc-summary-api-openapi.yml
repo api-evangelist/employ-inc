@@ -72,151 +72,62 @@ components:
       required:
       - indicator
       - description
-    Page:
+    Component:
       type: object
-      description: Identity of the Employ status page the response belongs to.
+      description: One monitored Employ platform component.
       properties:
         id:
           type: string
-          description: Statuspage page identifier (5t2j43rsvdfx for Employ).
+          description: Component identifier.
         name:
           type: string
-          description: Page name.
-        url:
-          type: string
-          format: uri
-          description: Public page URL.
-        time_zone:
-          type: string
-          description: IANA time zone the page renders times in.
-        updated_at:
-          type: string
-          format: date-time
-          description: When the page was last updated.
-      required:
-      - id
-      - name
-      - url
-      - updated_at
-    ScheduledMaintenance:
-      type: object
-      description: A scheduled maintenance window and its update timeline.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          description: Incident title.
+          description: Component display name, e.g. AI Interview Companion.
         status:
           type: string
+          description: Current operational state.
           enum:
-          - investigating
-          - identified
-          - monitoring
-          - resolved
-          - postmortem
-        impact:
-          type: string
-          enum:
-          - none
-          - minor
-          - major
-          - critical
-        shortlink:
-          type: string
-          format: uri
-          description: stspg.io short link to the incident.
-        page_id:
-          type: string
-        started_at:
+          - operational
+          - degraded_performance
+          - partial_outage
+          - major_outage
+          - under_maintenance
+        description:
           type:
           - string
           - 'null'
-          format: date-time
-        resolved_at:
+          description: What the component covers.
+        position:
+          type: integer
+          description: Display order on the page.
+        group:
+          type: boolean
+          description: True when the entry is a group header rather than a component.
+        group_id:
           type:
           - string
           - 'null'
-          format: date-time
-        monitoring_at:
+          description: Parent group identifier, when grouped.
+        showcase:
+          type: boolean
+          description: Whether the component is showcased on the page.
+        only_show_if_degraded:
+          type: boolean
+          description: Whether the component is hidden while operational.
+        start_date:
           type:
           - string
           - 'null'
-          format: date-time
+          description: Date the component began being monitored.
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
-        incident_updates:
-          type: array
-          items:
-            type: object
-            description: One dated update posted against an incident.
-            properties:
-              id:
-                type: string
-              incident_id:
-                type: string
-              status:
-                type: string
-                enum:
-                - investigating
-                - identified
-                - monitoring
-                - resolved
-                - postmortem
-              body:
-                type: string
-                description: The update text as published.
-              created_at:
-                type: string
-                format: date-time
-              updated_at:
-                type: string
-                format: date-time
-              display_at:
-                type: string
-                format: date-time
-              affected_components:
-                type:
-                - array
-                - 'null'
-                items:
-                  type: object
-                  description: A component whose status changed in this update.
-                  properties:
-                    code:
-                      type: string
-                      description: Component identifier.
-                    name:
-                      type: string
-                    old_status:
-                      type: string
-                    new_status:
-                      type: string
-              deliver_notifications:
-                type: boolean
-              custom_tweet:
-                type:
-                - string
-                - 'null'
-              tweet_id:
-                type:
-                - string
-                - 'null'
-            required:
-            - id
-            - status
-            - body
-            - created_at
       required:
       - id
       - name
       - status
-      - impact
-      - created_at
     Incident:
       type: object
       description: An Employ platform incident and its update timeline.
@@ -336,59 +247,148 @@ components:
       - status
       - impact
       - created_at
-    Component:
+    ScheduledMaintenance:
       type: object
-      description: One monitored Employ platform component.
+      description: A scheduled maintenance window and its update timeline.
       properties:
         id:
           type: string
-          description: Component identifier.
         name:
           type: string
-          description: Component display name, e.g. AI Interview Companion.
+          description: Incident title.
         status:
           type: string
-          description: Current operational state.
           enum:
-          - operational
-          - degraded_performance
-          - partial_outage
-          - major_outage
-          - under_maintenance
-        description:
+          - investigating
+          - identified
+          - monitoring
+          - resolved
+          - postmortem
+        impact:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+        shortlink:
+          type: string
+          format: uri
+          description: stspg.io short link to the incident.
+        page_id:
+          type: string
+        started_at:
           type:
           - string
           - 'null'
-          description: What the component covers.
-        position:
-          type: integer
-          description: Display order on the page.
-        group:
-          type: boolean
-          description: True when the entry is a group header rather than a component.
-        group_id:
+          format: date-time
+        resolved_at:
           type:
           - string
           - 'null'
-          description: Parent group identifier, when grouped.
-        showcase:
-          type: boolean
-          description: Whether the component is showcased on the page.
-        only_show_if_degraded:
-          type: boolean
-          description: Whether the component is hidden while operational.
-        start_date:
+          format: date-time
+        monitoring_at:
           type:
           - string
           - 'null'
-          description: Date the component began being monitored.
+          format: date-time
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
+        incident_updates:
+          type: array
+          items:
+            type: object
+            description: One dated update posted against an incident.
+            properties:
+              id:
+                type: string
+              incident_id:
+                type: string
+              status:
+                type: string
+                enum:
+                - investigating
+                - identified
+                - monitoring
+                - resolved
+                - postmortem
+              body:
+                type: string
+                description: The update text as published.
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              display_at:
+                type: string
+                format: date-time
+              affected_components:
+                type:
+                - array
+                - 'null'
+                items:
+                  type: object
+                  description: A component whose status changed in this update.
+                  properties:
+                    code:
+                      type: string
+                      description: Component identifier.
+                    name:
+                      type: string
+                    old_status:
+                      type: string
+                    new_status:
+                      type: string
+              deliver_notifications:
+                type: boolean
+              custom_tweet:
+                type:
+                - string
+                - 'null'
+              tweet_id:
+                type:
+                - string
+                - 'null'
+            required:
+            - id
+            - status
+            - body
+            - created_at
       required:
       - id
       - name
       - status
+      - impact
+      - created_at
+    Page:
+      type: object
+      description: Identity of the Employ status page the response belongs to.
+      properties:
+        id:
+          type: string
+          description: Statuspage page identifier (5t2j43rsvdfx for Employ).
+        name:
+          type: string
+          description: Page name.
+        url:
+          type: string
+          format: uri
+          description: Public page URL.
+        time_zone:
+          type: string
+          description: IANA time zone the page renders times in.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the page was last updated.
+      required:
+      - id
+      - name
+      - url
+      - updated_at
