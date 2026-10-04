@@ -1,0 +1,33 @@
+slug: employ-inc
+provider: Employ
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Status
+  spec_file: employ-inc-status-api-openapi.yml
+  capability_id: BC-4290.30
+  capability_id_l1: BC-4290
+  capability_name: Trust Portal & Public Disclosure
+  confidence: 0.7
+  evidence: GET /status.json  getStatusIndicator  Get the rollup status indicator
+  reason: Rollup availability indicator served anonymously from status.employinc.com — the canonical public
+    status disclosure capability.
+- tag: Summary
+  spec_file: employ-inc-summary-api-openapi.yml
+  capability_id: BC-4290.30
+  capability_id_l1: BC-4290
+  capability_name: Trust Portal & Public Disclosure
+  confidence: 0.7
+  evidence: GET /summary.json  getStatusSummary  Get the full status summary
+  reason: Aggregated public status document (indicator, components, incidents, maintenance) — public trust/status
+    disclosure surface.

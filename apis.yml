@@ -125,6 +125,9 @@ apis:
   - type: OpenAPI
     url: openapi/employ-inc-summary-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/employ-inc-capability-edges.yml
+  name: Employ Business Capability Map
 - type: Overlay
   url: overlays/employ-inc-content-api-overlay.yaml
 - type: Overlay
