@@ -97,32 +97,6 @@ paths:
           description: No status page at this host.
 components:
   schemas:
-    Page:
-      type: object
-      description: Identity of the Employ status page the response belongs to.
-      properties:
-        id:
-          type: string
-          description: Statuspage page identifier (5t2j43rsvdfx for Employ).
-        name:
-          type: string
-          description: Page name.
-        url:
-          type: string
-          format: uri
-          description: Public page URL.
-        time_zone:
-          type: string
-          description: IANA time zone the page renders times in.
-        updated_at:
-          type: string
-          format: date-time
-          description: When the page was last updated.
-      required:
-      - id
-      - name
-      - url
-      - updated_at
     ScheduledMaintenance:
       type: object
       description: A scheduled maintenance window and its update timeline.
@@ -242,3 +216,29 @@ components:
       - status
       - impact
       - created_at
+    Page:
+      type: object
+      description: Identity of the Employ status page the response belongs to.
+      properties:
+        id:
+          type: string
+          description: Statuspage page identifier (5t2j43rsvdfx for Employ).
+        name:
+          type: string
+          description: Page name.
+        url:
+          type: string
+          format: uri
+          description: Public page URL.
+        time_zone:
+          type: string
+          description: IANA time zone the page renders times in.
+        updated_at:
+          type: string
+          format: date-time
+          description: When the page was last updated.
+      required:
+      - id
+      - name
+      - url
+      - updated_at
