@@ -53,25 +53,6 @@ paths:
           description: No status page at this host.
 components:
   schemas:
-    StatusIndicator:
-      type: object
-      description: The rollup availability indicator for the whole page.
-      properties:
-        indicator:
-          type: string
-          enum:
-          - none
-          - minor
-          - major
-          - critical
-          - maintenance
-          description: Machine-readable rollup severity.
-        description:
-          type: string
-          description: Human-readable rollup, e.g. All Systems Operational.
-      required:
-      - indicator
-      - description
     Page:
       type: object
       description: Identity of the Employ status page the response belongs to.
@@ -98,6 +79,25 @@ components:
       - name
       - url
       - updated_at
+    StatusIndicator:
+      type: object
+      description: The rollup availability indicator for the whole page.
+      properties:
+        indicator:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+          - maintenance
+          description: Machine-readable rollup severity.
+        description:
+          type: string
+          description: Human-readable rollup, e.g. All Systems Operational.
+      required:
+      - indicator
+      - description
     Component:
       type: object
       description: One monitored Employ platform component.
