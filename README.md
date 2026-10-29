@@ -1,4 +1,4 @@
-# Employ Inc
+# Employ
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,4 +64,141 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Employ Inc is a company surfaced via the API Evangelist harvest backlog (source: absent-parent) and added to the network as a stub for full-pipeline profiling.
+Employ, Inc. is the Denver-based parent company of the JazzHR, Lever and Jobvite applicant tracking systems, and of the AI Interview, Screening and Sourcing Companions layered across them. Employ itself runs no developer program: the recruiting APIs its customers integrate against are published under each brand's own domain and are profiled separately in this network. What Employ publishes on employinc.com is a corporate surface that is nonetheless machine-readable — the WordPress REST API behind its site, two self-describing Events Calendar REST contracts, and an anonymous Atlassian Statuspage API on status.employinc.com — plus the legal, security and responsible-AI documents (Security Exhibit, DPAs, SLAs, NYC Local Law 144 bias audit) that govern every brand underneath it.
+
+**Areas:** Human Resources · Recruiting · Talent Acquisition · Applicant Tracking · Hiring · Content · Event · Status
+
+## Employ on APIs.io
+
+Everything profiled for Employ is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/employ-inc/](https://apis.io/providers/employ-inc/)** — or go straight to one of the APIs or properties below.
+
+### APIs (6)
+
+- [Employ Inc Status API](https://apis.io/apis/employ-inc/employ-inc-status-api/) — The public Atlassian Statuspage API on status.employinc.com. Eight anonymous endpoints report the rollup availability indicator, every monitored Employ…
+- [Employ Inc Website (WordPress REST)](https://apis.io/apis/employ-inc/employinc-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Employ Inc website at www.employinc.com: the route index of the site's content management system, catalogued…
+- [Employ Components API](https://apis.io/apis/employ-inc/employ-inc-components-api/) — Individually monitored Employ platform components.
+- [Employ Incidents API](https://apis.io/apis/employ-inc/employ-inc-incidents-api/) — Incidents and their dated update timelines.
+- [Employ Maintenance API](https://apis.io/apis/employ-inc/employ-inc-maintenance-api/) — Scheduled maintenance windows.
+- [Employ Summary API](https://apis.io/apis/employ-inc/employ-inc-summary-api/) — The one-call rollup of everything on the page.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Employ Inc Status Webhooks](https://apis.io/asyncapis/employ-inc/employ-inc-status-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Employ Inc MCP candidate](https://apis.io/servers/employ-inc/employ-inc-mcp-candidate/)
+
+#### Examples (7)
+
+Example requests and responses.
+
+- [Moved to /providers/employ-inc/](https://apis.io/examples/employ-inc/employ-inc-content-types/)
+- [Moved to /providers/employ-inc/](https://apis.io/examples/employ-inc/employ-inc-event-venues/)
+- [Moved to /providers/employ-inc/](https://apis.io/examples/employ-inc/employ-inc-events/)
+- [Employ Inc Status Components](https://apis.io/examples/employ-inc/employ-inc-status-components/)
+- [Employ Inc Status Incidents](https://apis.io/examples/employ-inc/employ-inc-status-incidents/)
+- [Employ Inc Status Summary](https://apis.io/examples/employ-inc/employ-inc-status-summary/)
+- [Moved to /providers/employ-inc/](https://apis.io/examples/employ-inc/employ-inc-taxonomies/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Employ Inc Content Api Overlay](https://apis.io/overlays/employ-inc/employ-inc-content-api-overlay/)
+- [Employ Inc Events Calendar Rest Api Overlay](https://apis.io/overlays/employ-inc/employ-inc-events-calendar-rest-api-overlay/)
+- [Employ Inc Status Api Overlay](https://apis.io/overlays/employ-inc/employ-inc-status-api-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Employ Inc Authentication](https://apis.io/security/employ-inc/employ-inc-authentication/)
+- [Employ Inc Domain Security](https://apis.io/security/employ-inc/employ-inc-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Employ Inc Plans Pricing](https://apis.io/plans/employ-inc/employ-inc-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Employ Inc Rate Limits](https://apis.io/rate-limits/employ-inc/employ-inc-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.employinc.com/)
+- [Support](https://www.employinc.com/contact/)
+- [Blog](https://www.employinc.com/blog/)
+- [Terms of service](https://www.employinc.com/terms-of-service/)
+- [Privacy policy](https://www.employinc.com/privacy-notice-general/)
+- [GitHub](https://github.com/Employ-Inc)
+- [Status](https://status.employinc.com/)
+
+## API Evangelist rating
+
+**Kin Score 43.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 69.6 |
+| Contract quality | 61.5 |
+| Contract governance | 18.2 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 30.4 |
+| Access clarity | 28.9 |
+
+**Agent readiness 29.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 37.3** — Employment & Payroll
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/employ-inc/](https://apis.io/providers/employ-inc/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Employ: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/employ-inc/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
